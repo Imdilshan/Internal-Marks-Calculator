@@ -8,6 +8,11 @@ A clean and fast **Internal Marks Calculator** that helps students compute their
 
 ---
 
+[![View Live](https://img.shields.io/badge/🔗%20View%20Live-Internal%20Marks%20Calculator-blue?style=for-the-badge)](https://imdilshan.github.io/Internal-Marks-Calculator/)
+
+---
+
+
 ## 🛠️ Features
 
 - Toggle between **Theory**, **Practical**, and **Hybrid** modes  
@@ -27,9 +32,11 @@ A clean and fast **Internal Marks Calculator** that helps students compute their
 ---
 
 ## 🚀 Try It Now
-[![View Live](https://img.shields.io/badge/🔗%20View%20Live-Internal%20Marks%20Calculator-blue?style=for-the-badge)](https://imdilshan.github.io/Internal-Marks-Calculator/)
+
+👉 **https://imdilshan.github.io/Internal-Marks-Calculator/**
 
 ---
 
 ## 📸 Preview
-![Preview](./assets/screenshot.png)
+![Preview](./preview.png)
+
