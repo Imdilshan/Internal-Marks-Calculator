@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="icon" type="image/png" href="favicon.png" />
+      <title>Internal Marks Calculator</title>
+        <meta property="og:title" content="Internal Marks Calculator" />
+        <meta property="og:description" content="Calculate Internal marks and Grade easily." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://imdilshan.github.io/Internal-Marks-Calculator/" />
+        <meta property="og:image" content="https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Internal Marks Calculator" />
+        <meta name="twitter:description" content="Calculate Internal marks and Grade easily." />
+        <meta name="twitter:image" content="https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg" />
+      
+      <style>
+         :root{
+         --bg:#0f1112; --panel:#0b0d0e; --muted:#9fb0b6; --accent:#2fb0ff; --ok:#2fb26f; --danger:#e05a5a;
+         --tab-inactive:#071015;
+         --hybrid-color: #e05a5a; 
+         --theory-color: #2fb0ff;
+         --practical-color: #2fb26f; 
+         --tab-active-text-dark: #042026;
+         --tab-active-text-light: #ffffff;
+         }
+         html,body{height:100%;margin:0;background:linear-gradient(180deg,#0b0b0c 0%, #121314 100%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#e6eef2}
+         .container{max-width:1050px;margin:28px auto;padding:20px;}
+         header{text-align:center;margin-bottom:14px}
+         h1{font-size:26px;margin:0;color:var(--accent);font-weight:800}
+         .credit-wrap { margin-top: 8px; display:flex; justify-content:center; }
+         .credit {
+         display:inline-flex;
+         align-items:center;
+         gap:10px;
+         padding:8px 14px;
+         border-radius:14px;
+         background: rgba(255,255,255,0.03);
+         border: 1px solid rgba(255,255,255,0.04);
+         backdrop-filter: blur(6px);
+         text-decoration:none;
+         color: #bfe9ff;
+         font-weight:600;
+         font-size:14px;
+         transition: transform .14s ease, box-shadow .18s ease, background .12s ease;
+         box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+         }
+         .credit:hover { transform: translateY(-3px); background: rgba(47,176,255,0.08); box-shadow: 0 8px 30px rgba(47,176,255,0.06); color: var(--accent); }
+         .credit .gh-icon { width:18px; height:18px; display:inline-block; vertical-align:middle; fill: currentColor; opacity:0.95; }
+         .credit .name { color: #e6f9ff; font-weight:700; letter-spacing: .2px; }
+         .credit .meta { font-size:13px; opacity:0.85; color:#cfe7ef; }
+         @media (max-width:420px) {
+         .credit { padding:7px 10px; gap:8px; font-size:13px; border-radius:10px; }
+         }
+         .tabs{display:flex;gap:10px;margin:18px 0}
+         .tab{flex:1;padding:10px 14px;border-radius:8px;background:var(--tab-inactive);text-align:center;cursor:pointer;font-weight:700;color:#cfe7ef;user-select:none}
+         .tab.active{box-shadow:inset 0 -3px rgba(0,0,0,0.2)}
+         .tab.hybrid.active{background:var(--hybrid-color); color:var(--tab-active-text-light)}
+         .tab.theory.active{background:var(--theory-color); color:var(--tab-active-text-dark)}
+         .tab.practical.active{background:var(--practical-color); color:var(--tab-active-text-dark)}
+         .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));border-radius:12px;padding:18px;box-shadow: 0 8px 30px rgba(0,0,0,0.6);} 
+         .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+         .section{padding:12px;border-radius:10px;background:#071014;border:1px solid rgba(255,255,255,0.02)}
+         label{display:block;font-size:13px;color:#bcd1d9;margin-bottom:6px}
+         input[type=number]{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #233235;background:#060808;color:#e6eef2;font-weight:700}
+         .controls{display:flex;gap:10px;margin-top:16px}
+         button{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:800}
+         .btn-reset{background:var(--danger);color:white}
+         .btn-calc{background:var(--ok);color:#03100a;margin-left:auto}
+         .result{margin-top:16px;background:#061112;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+         .line{display:flex;justify-content:space-between;padding:6px 0;color:#d7eef5}
+         .bar{height:12px;background:#0a1a1c;border-radius:8px;overflow:hidden;margin-top:8px}
+         .bar > i{display:block;height:100%;background:linear-gradient(90deg,#1fb0ff,#2fd8a6)}
+         .small{font-size:13px;color:var(--muted)}
+         .break{margin-top:10px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:10px}
+         .invalid { border:1px solid var(--danger) !important; }
+         .error-msg{color:var(--danger);font-size:12px;margin-top:6px;display:none}
+         .error-msg.show{display:block}
+         @media (max-width:1000px){ .grid{grid-template-columns:1fr} .tabs{flex-direction:column} .controls{flex-direction:row-reverse} }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <header>
+            <h1>Internal Marks Calculator</h1>
+            <div class="credit-wrap" aria-hidden="false">
+               <a class="credit" href="https://github.com/Imdilshan" target="_blank" rel="noopener noreferrer" aria-label="Open my GitHub profile in a new tab">
+                  <span class="name">by</span>
+                  <svg class="gh-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                     <path d="M12 .297a12 12 0 0 0-3.797 23.396c.6.11.82-.26.82-.577v-2.04c-3.338.726-4.033-1.61-4.033-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.088-.744.083-.729.083-.729 1.205.086 1.84 1.234 1.84 1.234 1.07 1.834 2.809 1.305 3.494.998.108-.776.42-1.305.763-1.605-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.381 1.235-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 0 1 6.003 0c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.243 2.873.12 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.804 5.624-5.476 5.92.43.37.815 1.1.815 2.22v3.293c0 .32.217.694.825.576A12 12 0 0 0 12 .297"></path>
+                  </svg>
+                  <span class="name">Md Dilshan</span>
+               </a>
+            </div>
+         </header>
+         <div class="card">
+            <div class="tabs" role="tablist">
+               <div id="tab-hybrid" class="tab hybrid active" role="tab">Hybrid Subject</div>
+               <div id="tab-theory" class="tab theory" role="tab">Theory Subject</div>
+               <div id="tab-practical" class="tab practical" role="tab">Practical Subject</div>
+            </div>
+            <div id="panel-hybrid">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Theory Component (out of 50)</h3>
+                     <label>Assignment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_assignment" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_assignment" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">MST-1 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="hy_mst1" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-hy_mst1" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">MST-2 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="hy_mst2" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-hy_mst2" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">Surprise Test (out of 12)</label>
+                     <input type="number" inputmode="decimal" id="hy_surprise" min="0" max="12" step="0.01" placeholder="0 / 12">
+                     <div id="err-hy_surprise" class="error-msg">Value must be between 0 and 12</div>
+                     <label style="margin-top:10px">Quiz (out of 4)</label>
+                     <input type="number" inputmode="decimal" id="hy_quiz" min="0" max="4" step="0.01" placeholder="0 / 4">
+                     <div id="err-hy_quiz" class="error-msg">Value must be between 0 and 4</div>
+                     <label style="margin-top:10px">Case Study / PBL (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_pbl" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_pbl" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Attendance (out of 2)</label>
+                     <input type="number" inputmode="decimal" id="hy_attendance" min="0" max="2" step="0.01" placeholder="0 / 2">
+                     <div id="err-hy_attendance" class="error-msg">Value must be between 0 and 2</div>
+                     <label style="margin-top:10px">End Sem Written (out of 60)</label>
+                     <input type="number" inputmode="decimal" id="hy_endwritten" min="0" max="60" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-hy_endwritten" class="error-msg">Value must be between 0 and 60</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Practical Component (out of 100)</h3>
+                     <label>Experiment 1 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws1" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws1" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 2 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws2" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws2" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 3 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws3" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws3" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 4 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws4" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws4" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Class Performance (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_classperf" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_classperf" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Course Project (out of 5)</label>
+                     <input type="number" inputmode="decimal" id="hy_miniproject" min="0" max="5" step="0.01" placeholder="0 / 5">
+                     <div id="err-hy_miniproject" class="error-msg">Value must be between 0 and 5</div>
+                     <label style="margin-top:10px">Industry Aligned Assessment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_industry" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_industry" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">End Sem Practical (out of 40)</label>
+                     <input type="number" inputmode="decimal" id="hy_endpractical" min="0" max="40" step="0.01" placeholder="0 / 40">
+                     <div id="err-hy_endpractical" class="error-msg">Value must be between 0 and 40</div>
+                  </div>
+               </div>
+               <div class="controls">
+                  <button id="reset-hybrid" class="btn-reset">Reset</button>
+                  <button id="calc-hybrid" class="btn-calc">Calculate Hybrid</button>
+               </div>
+               <div id="result-hybrid" class="result" style="display:none">
+                  <h3 style="margin:0 0 8px;color:#bfe9ff">Hybrid Results</h3>
+                  <div class="line">
+                     <div class="small">Theory</div>
+                     <div id="hy_theory_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="break"></div>
+                  <div class="line">
+                     <div class="small">Practical</div>
+                     <div id="hy_practical_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="break"></div>
+                  <div class="line">
+                     <div class="small">Final</div>
+                     <div id="hy_combined_obt" style="font-family:monospace"></div>
+                  </div>
+                  <div class="line">
+                     <div class="small">Final %</div>
+                     <div id="hy_combined_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="bar"><i id="hy_bar" style="width:0%"></i></div>
+                  <div class="break"></div>
+               </div>
+            </div>
+            <div id="panel-theory" style="display:none;margin-top:14px">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Theory Subject</h3>
+                     <label>Assignment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="t_assignment" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-t_assignment" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">MST 1 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="t_mst1" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-t_mst1" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">MST 2 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="t_mst2" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-t_mst2" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">Surprise Test (out of 12)</label>
+                     <input type="number" inputmode="decimal" id="t_surprise" min="0" max="12" step="0.01" placeholder="0 / 12">
+                     <div id="err-t_surprise" class="error-msg">Value must be between 0 and 12</div>
+                     <label style="margin-top:10px">Quiz (out of 4)</label>
+                     <input type="number" inputmode="decimal" id="t_quiz" min="0" max="4" step="0.01" placeholder="0 / 4">
+                     <div id="err-t_quiz" class="error-msg">Value must be between 0 and 4</div>
+                     <label style="margin-top:10px">Attendance (out of 2)</label>
+                     <input type="number" inputmode="decimal" id="t_attendance" min="0" max="2" step="0.01" placeholder="0 / 2">
+                     <div id="err-t_attendance" class="error-msg">Value must be between 0 and 2</div>
+                     <label style="margin-top:10px">End Sem Written (out of 60)</label>
+                     <input type="number" inputmode="decimal" id="t_endwritten" min="0" max="60" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-t_endwritten" class="error-msg">Value must be between 0 and 60</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Output</h3>
+                     <div id="result-theory" class="result" style="display:none">
+                        <div class="line">
+                           <div class="small">Obtained</div>
+                           <div id="t_obt" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Total Max</div>
+                           <div id="t_max" style="font-family:monospace">40</div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Percentage</div>
+                           <div id="t_pct" style="font-weight:800"></div>
+                        </div>
+                        <div class="bar"><i id="t_bar" style="width:0%"></i></div>
+                        <div class="break"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="controls" style="margin-top:12px">
+                  <button id="reset-theory" class="btn-reset">Reset</button>
+                  <button id="calc-theory" class="btn-calc">Calculate Theory</button>
+               </div>
+            </div>
+            <div id="panel-practical" style="display:none;margin-top:14px">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Practical Subject</h3>
+                     <label>Experiment 1 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws1" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws1" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 2 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws2" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws2" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 3 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws3" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws3" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 4 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws4" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws4" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Class Performance (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="pr_classperf" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-pr_classperf" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Course Project (out of 5)</label>
+                     <input type="number" inputmode="decimal" id="pr_miniproject" min="0" max="5" step="0.01" placeholder="0 / 5">
+                     <div id="err-pr_miniproject" class="error-msg">Value must be between 0 and 5</div>
+                     <label style="margin-top:10px">Industry Aligned Assessment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="pr_industry" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-pr_industry" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">End Sem Practical (out of 40)</label>
+                     <input type="number" inputmode="decimal" id="pr_endpractical" min="0" max="40" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-pr_endpractical" class="error-msg">Value must be between 0 and 40</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Output</h3>
+                     <div id="result-practical" class="result" style="display:none">
+                        <div class="line">
+                           <div class="small">Practical Obtained</div>
+                           <div id="pr_obt" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Practical Max</div>
+                           <div id="pr_max" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Practical %</div>
+                           <div id="pr_pct" style="font-weight:800"></div>
+                        </div>
+                        <div class="bar"><i id="pr_bar" style="width:0%"></i></div>
+                        <div class="break"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="controls" style="margin-top:12px">
+                  <button id="reset-practical" class="btn-reset">Reset</button>
+                  <button id="calc-practical" class="btn-calc">Calculate Practical</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         (function(){
+         
+           const tabHybrid = document.getElementById('tab-hybrid');
+           const tabTheory = document.getElementById('tab-theory');
+           const tabPractical = document.getElementById('tab-practical');
+           const panelHybrid = document.getElementById('panel-hybrid');
+           const panelTheory = document.getElementById('panel-theory');
+           const panelPractical = document.getElementById('panel-practical');
+           function showTab(tab){
+             tabHybrid.classList.remove('active');
+             tabTheory.classList.remove('active');
+             tabPractical.classList.remove('active');
+             panelHybrid.style.display = 'none';
+             panelTheory.style.display = 'none';
+             panelPractical.style.display = 'none';
+             tab.classList.add('active');
+             if(tab === tabHybrid) panelHybrid.style.display = '';
+             if(tab === tabTheory) panelTheory.style.display = '';
+             if(tab === tabPractical) panelPractical.style.display = '';
+           }
+           if(tabHybrid && tabTheory && tabPractical){
+             tabHybrid.addEventListener('click', ()=> showTab(tabHybrid));
+             tabTheory.addEventListener('click', ()=> showTab(tabTheory));
+             tabPractical.addEventListener('click', ()=> showTab(tabPractical));
+           }
+         
+           function getRawValue(id){
+             const el = document.getElementById(id);
+             if(!el) return {provided:false, value:0};
+             if(el.value === '' || el.value === null) return {provided:false, value:0};
+             const n = Number(el.value);
+             return {provided: !Number.isNaN(n), value: n};
+           }
+           function getNum(id, max){
+             const r = getRawValue(id);
+             if(!r.provided) return 0;
+             let n = r.value;
+             if(Number.isNaN(n)) return 0;
+             if(typeof max === 'number'){
+               if(n < 0) n = 0;
+               if(n > max) n = max;
+             }
+             return n;
+           }
+           function setText(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; }
+           function show(id){ const el = document.getElementById(id); if(el) el.style.display = ''; }
+           function hide(id){ const el = document.getElementById(id); if(el) el.style.display = 'none'; }
+         
+           const numberInputs = Array.from(document.querySelectorAll('input[type=number]'));
+           numberInputs.forEach(inp => {
+             inp.addEventListener('input', (e)=>{
+               const oldPos = inp.selectionStart;
+               const oldVal = inp.value;
+               let cleaned = oldVal.replace(/[eE+\-]/g, '');
+               const parts = cleaned.split('.');
+               if(parts.length > 2) cleaned = parts[0] + '.' + parts.slice(1).join('');
+               if(cleaned !== oldVal){
+                 const diff = oldVal.length - cleaned.length;
+                 inp.value = cleaned;
+                 const newPos = Math.max(oldPos - diff, 0);
+                 try { inp.setSelectionRange(newPos, newPos); } catch(e){}
+               }
+               validateField(inp.id);
+             });
+             inp.addEventListener('keydown', (ev)=>{
+               const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+               if(allowed.includes(ev.key)) return;
+               if((ev.key >= '0' && ev.key <= '9') || ev.key === '.') return;
+               ev.preventDefault();
+             });
+           });
+         
+           function validateField(id){
+             const el = document.getElementById(id);
+             const err = document.getElementById('err-' + id);
+             if(!el || !err) return true;
+             const min = el.hasAttribute('min') ? Number(el.getAttribute('min')) : null;
+             const max = el.hasAttribute('max') ? Number(el.getAttribute('max')) : null;
+             if(el.value === ''){
+               el.classList.remove('invalid');
+               err.classList.remove('show');
+               return true;
+             }
+             const n = Number(el.value);
+             if(Number.isNaN(n)){ el.classList.add('invalid'); err.textContent = 'Enter a valid number'; err.classList.add('show'); return false; }
+             if(min !== null && n < min){ el.classList.add('invalid'); err.textContent = `Value must be ≥ ${min}`; err.classList.add('show'); return false; }
+             if(max !== null && n > max){ el.classList.add('invalid'); err.textContent = `Value must be ≤ ${max}`; err.classList.add('show'); return false; }
+             el.classList.remove('invalid'); err.classList.remove('show'); return true;
+           }
+           function validateAll(){ return Array.from(numberInputs).map(i=> validateField(i.id)).every(x=>x); }
+         
+           function calcHybrid(){
+             try{
+               if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+               const assignment = getNum('hy_assignment', 10);
+               const mst1 = getNum('hy_mst1', 20);
+               const mst2 = getNum('hy_mst2', 20);
+               const surprise = getNum('hy_surprise', 12);
+               const quiz = getNum('hy_quiz', 4);
+               const pbl = getNum('hy_pbl', 10);
+               const attendance = getNum('hy_attendance', 2);
+               const rawEnd = document.getElementById('hy_endwritten');
+               let endWrittenProvided = false, endWrittenRaw = 0;
+               if(rawEnd && rawEnd.value !== ''){ endWrittenProvided = true; endWrittenRaw = Number(rawEnd.value); }
+         
+               const ws1 = getNum('hy_ws1',30), ws2 = getNum('hy_ws2',30), ws3 = getNum('hy_ws3',30), ws4 = getNum('hy_ws4',30);
+               const classPerfOrig = getNum('hy_classperf',10), miniproject = getNum('hy_miniproject',5), industry = getNum('hy_industry',10);
+               const endPracticalEl = document.getElementById('hy_endpractical');
+               let endPracticalProvided = false, endPractical = 0;
+               if(endPracticalEl && endPracticalEl.value !== ''){ endPracticalProvided = true; endPractical = Number(endPracticalEl.value); }
+         
+               const mstFinal = (mst1 + mst2) / 2;
+               const surpriseFinal = (surprise + quiz) / 2;
+               const theoryInternal = assignment + mstFinal + surpriseFinal + pbl + attendance;
+               const endWrittenScaled = endWrittenProvided ? (endWrittenRaw / 60) * 50 : 0;
+               const theoryTotal = endWrittenProvided ? (theoryInternal + endWrittenScaled) : theoryInternal;
+               const theoryMax = endWrittenProvided ? 100 : 50;
+               const theoryPct = theoryMax === 0 ? 0 : (theoryTotal / theoryMax) * 100;
+         
+               const wsSum = ws1 + ws2 + ws3 + ws4;
+               const classAssessment = wsSum / 3;
+               const classPerfNew = classPerfOrig / 2;
+               const practicalInternal = classAssessment + classPerfNew + miniproject + industry; 
+               const practicalTotal = endPracticalProvided ? (practicalInternal + endPractical) : practicalInternal;
+               const practicalMax = endPracticalProvided ? 100 : 60;
+               const practicalPct = practicalMax === 0 ? 0 : (practicalTotal / practicalMax) * 100;
+         
+               const totalObtained = theoryTotal + practicalTotal;
+               const totalMax = theoryMax + practicalMax;
+               const displayObtained = totalObtained / 2;
+               const displayMax = totalMax / 2;
+               const displayPct = displayMax === 0 ? 0 : (displayObtained / displayMax) * 100;
+         
+               setText('hy_theory_pct', `${theoryTotal.toFixed(2)} / ${theoryMax} (${theoryPct.toFixed(2)}%)`);
+               setText('hy_practical_pct', `${practicalTotal.toFixed(2)} / ${practicalMax} (${practicalPct.toFixed(2)}%)`);
+               setText('hy_combined_obt', `${displayObtained.toFixed(2)} / ${displayMax.toFixed(2)}`);
+               setText('hy_combined_pct', displayPct.toFixed(2) + '%');
+         
+               const bar = document.getElementById('hy_bar'); if(bar) bar.style.width = Math.min(100, displayPct) + '%';
+               show('result-hybrid');
+               const resEl = document.getElementById('result-hybrid'); if(resEl) resEl.scrollIntoView({behavior:'smooth', block:'center'});
+             }catch(err){ console.error(err); alert('Calculation failed — open console for details'); }
+           }
+           document.getElementById('calc-hybrid').addEventListener('click', calcHybrid);
+           document.getElementById('reset-hybrid').addEventListener('click', ()=>{
+             ['hy_assignment','hy_mst1','hy_mst2','hy_surprise','hy_quiz','hy_pbl','hy_attendance','hy_endwritten','hy_ws1','hy_ws2','hy_ws3','hy_ws4','hy_classperf','hy_miniproject','hy_industry','hy_endpractical'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-hybrid');
+           });
+         
+           function calcTheory(){
+             if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+             const a = getNum('t_assignment',10), m1 = getNum('t_mst1',20), m2 = getNum('t_mst2',20);
+             const surprise = getNum('t_surprise',12), quiz = getNum('t_quiz',4), at = getNum('t_attendance',2);
+             const tEndEl = document.getElementById('t_endwritten');
+             let tEndProvided = false, tEndRaw = 0;
+             if(tEndEl && tEndEl.value !== ''){ tEndProvided = true; tEndRaw = Number(tEndEl.value); }
+             const mstFinal = (m1 + m2) / 2;
+             const surpriseFinal = surprise / 2;
+             const quizFinal = quiz / 2;
+             const internalObtained = a + mstFinal + surpriseFinal + quizFinal + at;
+             let obtained = internalObtained, totalMax = 40;
+             if(tEndProvided){ obtained = internalObtained + tEndRaw; totalMax = 100; }
+             const pct = totalMax === 0 ? 0 : (obtained / totalMax) * 100;
+             setText('t_obt', `${obtained.toFixed(2)} / ${totalMax}`);
+             setText('t_max', totalMax.toFixed(0));
+             setText('t_pct', pct.toFixed(2) + '%');
+             const tbar = document.getElementById('t_bar'); if(tbar) tbar.style.width = Math.min(100,pct) + '%';
+             show('result-theory');
+             const resT = document.getElementById('result-theory'); if(resT) resT.scrollIntoView({behavior:'smooth', block:'center'});
+           }
+           document.getElementById('calc-theory').addEventListener('click', calcTheory);
+           document.getElementById('reset-theory').addEventListener('click', ()=>{
+             ['t_assignment','t_mst1','t_mst2','t_surprise','t_quiz','t_attendance','t_endwritten'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-theory');
+           });
+         
+           function calcPractical(){
+             if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+             const ws1 = getNum('pr_ws1',30), ws2 = getNum('pr_ws2',30), ws3 = getNum('pr_ws3',30), ws4 = getNum('pr_ws4',30);
+             const wsAvg = (ws1 + ws2 + ws3 + ws4) / 4;
+             const worksheetsScaled = (wsAvg * (40/30)); 
+             const classPerf = getNum('pr_classperf',10);
+             const mini = getNum('pr_miniproject',5);
+             const industry = getNum('pr_industry',10);
+         
+             const prInternal = worksheetsScaled + (classPerf / 2) + mini + industry; 
+             const endEl = document.getElementById('pr_endpractical');
+             let endProvided = false, endRaw = 0;
+             if(endEl && endEl.value !== ''){ endProvided = true; endRaw = Number(endEl.value); }
+             const prTotal = endProvided ? (prInternal + endRaw) : prInternal;
+             const prMax = endProvided ? 100 : 60;
+             const prPct = prMax === 0 ? 0 : (prTotal / prMax) * 100;
+         
+             setText('pr_obt', `${prTotal.toFixed(2)}`);
+             setText('pr_max', `${prMax}`);
+             setText('pr_pct', `${prPct.toFixed(2)}%`);
+             const prbar = document.getElementById('pr_bar'); if(prbar) prbar.style.width = Math.min(100, prPct) + '%';
+             show('result-practical');
+             const res = document.getElementById('result-practical'); if(res) res.scrollIntoView({behavior:'smooth', block:'center'});
+           }
+           document.getElementById('calc-practical').addEventListener('click', calcPractical);
+           document.getElementById('reset-practical').addEventListener('click', ()=>{
+             ['pr_ws1','pr_ws2','pr_ws3','pr_ws4','pr_classperf','pr_miniproject','pr_industry','pr_endpractical'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-practical');
+           });
+         
+           hide('result-hybrid');
+           hide('result-theory');
+           hide('result-practical');
+         
+         })();
+      </script>
+   </body>
+</html>
