@@ -79,5 +79,5 @@ A clean, fast, and **CSP-compliant SGPA & Internal Marks Calculator** that helps
 ---
 
 ## 📸 Preview
-![Preview](./preview.png)
+![Preview](./preview1.jpg)
 
