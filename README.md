@@ -1,2 +1,34 @@
-# Internal-Marks-Calculator
-Internal-Marks-Calculator is a simple and fast web tool that helps students calculate internal assessment marks for theory, practical, and hybrid subjects. It supports MSTs, assignments, experiments, and attendance, providing instant and accurate score estimation.
+# 📘 Internal Marks Calculator
+A clean and fast **Internal Marks Calculator** that helps students compute their internal assessment marks for:
+
+- 📝 Theory subjects  
+- 🧪 Practical subjects  
+- 🔄 Hybrid (Theory + Practical)  
+- 🎯 MSTs, Assignments, Experiments, Attendance & more  
+
+---
+
+## 🛠️ Features
+
+- Toggle between **Theory**, **Practical**, and **Hybrid** modes  
+- Calculate MST, written, assignment, experiment & attendance marks  
+- Instant final internal score  
+- Simple, clean, and responsive UI  
+- Optimized for mobile & desktop  
+
+---
+
+## 🧾 Tech Stack
+
+- **HTML**  
+- **CSS**  
+- **JavaScript**  
+
+---
+
+## 🚀 Try It Now
+`https://Imdilshan.github.io/Internal-Marks-Calculator/`
+
+---
+
+## 📸 Preview (Add Later)
