@@ -31,4 +31,4 @@ A clean and fast **Internal Marks Calculator** that helps students compute their
 
 ---
 
-## 📸 Preview (Add Later)
+## 📸 Preview
