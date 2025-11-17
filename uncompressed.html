@@ -16,7 +16,7 @@
     <meta name="twitter:title" content="Internal Marks Calculator" />
     <meta name="twitter:description" content="Calculate Internal marks and Grade easily." />
     <meta name="twitter:image" content="https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg" />
-    <title>SGPA Estimator - CS201</title>
+    <title>SGPA Estimator</title>
     <meta name="description" content="Estimate your SGPA with internal marks and projected external scores">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
@@ -303,7 +303,7 @@
             background: white;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-2);
-            overflow: hidden;
+            overflow: visible;
             transition: background 300ms ease;
         }
 
@@ -715,6 +715,7 @@
         .tab-panel {
             padding: var(--space-6);
             animation: fadeIn 300ms ease;
+            overflow: visible;
         }
 
         .tab-panel[hidden] {
@@ -1914,6 +1915,116 @@
                 display: none;
             }
         }
+
+        /* Custom Dropdown Menu for Social Internship */
+        .si-dropdown-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .si-dropdown-wrapper .si-dropdown-label {
+            padding: 12px 16px;
+            background: #2d2f31;
+            color: white;
+            font-size: var(--fs-sm);
+            font-variant: small-caps;
+            cursor: pointer;
+            display: block;
+            border-radius: var(--radius-sm);
+            user-select: none;
+        }
+
+        .si-dropdown-wrapper .si-dropdown-label::after {
+            float: right;
+            right: 10%;
+            content: "+";
+            font-size: 1em;
+            transition: transform 0.3s ease;
+        }
+
+        .si-dropdown-wrapper .si-dropdown-slide {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 0px;
+            overflow: hidden;
+            text-align: center;
+            transition: height 0.3s ease;
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+            z-index: 1000;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .si-dropdown-wrapper .si-dropdown-slide li {
+            padding: 4px;
+            list-style: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .si-dropdown-wrapper .si-dropdown-slide li:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide li:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .si-dropdown-wrapper .si-dropdown-slide li a {
+            text-decoration: none;
+            color: #2d2f31;
+            display: block;
+            font-size: var(--fs-sm);
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide li a {
+            color: #e5e5e5;
+        }
+
+        .si-dropdown-wrapper input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            height: 0px;
+            width: 0px;
+            pointer-events: none;
+        }
+
+        .si-dropdown-wrapper input[type="checkbox"]:checked + .si-dropdown-label::after {
+            transform: rotateZ(45deg);
+        }
+
+        .si-dropdown-wrapper input[type="checkbox"]:checked ~ .si-dropdown-slide {
+            height: 192px;
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-label {
+            background: #1a1a1a;
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide {
+            background: #1a1a1a;
+            border: 1px solid #404040;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide li a {
+            color: #e5e5e5;
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide li a {
+            color: #e5e5e5;
+        }
+
+        [data-theme="dark"] .si-dropdown-wrapper .si-dropdown-slide li:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
 <body>
@@ -2073,7 +2184,7 @@
                         </svg>
                         Total Credits
                     </div>
-                    <div class="result-value" id="total-credits">20</div>
+                    <div class="result-value" id="total-credits">23</div>
                 </div>
                 <div class="result-card">
                     <div class="result-label">
@@ -2083,19 +2194,11 @@
                             <line x1="16" y1="13" x2="8" y2="13"></line>
                             <line x1="16" y1="17" x2="8" y2="17"></line>
                         </svg>
-                        Total Marks
+                        Total Marks you earned
                     </div>
                     <div class="result-value" id="total-marks">0</div>
                 </div>
-                <div class="result-card">
-                    <div class="result-label">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        Grade Points
-                    </div>
-                    <div class="result-value" id="grade-points">0</div>
-                </div>
+
             </div>
 
             <div class="breakdown-section">
@@ -2137,8 +2240,8 @@
                         SGPA = Σ(Grade Point × Credits) / Σ(Credits)
                     </div>
                     <p style="margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--neutral-500); font-style: italic;">
-                        Example: If you score 85% (A+ = 9 GP) in a 4-credit subject and 75% (A = 8 GP) in a 3-credit subject:<br>
-                        SGPA = (9×4 + 8×3) / (4+3) = 60/7 = 8.57
+                        Example: If you score 98% (A+ = 10 GP) in a 4-credit subject and 92% (A = 9 GP) in a 3-credit subject:<br>
+                        SGPA = (10×4 + 9×3) / (4+3) = 67/7 = 9.57
                     </p>
                 </div>
 
@@ -2154,50 +2257,50 @@
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-3); margin-top: var(--space-4);">
                         <div style="background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">90-100%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">O Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">96-100%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">A+ Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Outstanding • 10 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">80-89%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">A+ Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">90-95%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">A Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Excellent • 9 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">70-79%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">A Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">85-89%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">B+ Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Very Good • 8 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">60-69%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">B+ Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">60-84%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">B Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Good • 7 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
                             <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">50-59%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">B Grade</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">C+ Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Above Average • 6 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #F97316 0%, #EA580C 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">45-49%</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">40-49%</div>
                             <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">C Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Average • 5 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">40-44%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">P Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">35-39%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">D Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Pass • 4 GP</div>
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); padding: var(--space-4); border-radius: var(--radius-md); color: white;">
-                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">0-39%</div>
-                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">F Grade</div>
+                            <div style="font-size: var(--fs-xs); opacity: 0.9; margin-bottom: var(--space-1);">0-34%</div>
+                            <div style="font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--space-1);">E/F Grade</div>
                             <div style="font-size: var(--fs-sm); opacity: 0.95;">Fail • 0 GP</div>
                         </div>
                     </div>
@@ -2382,18 +2485,36 @@
                 externals: [
                     { name: "External Viva / Voce", max: 40, obtained: 0 }
                 ]
+            },
+            {
+                name: "Four G P",
+                code: "24GP-101",
+                credits: 1,
+                components: [
+                    { name: "Completion", max: 10, obtained: 0, isGradeInput: true }
+                ],
+                externals: []
+            },
+            {
+                name: "Social Internship",
+                code: "24SI-101",
+                credits: 2,
+                components: [
+                    { name: "Grade", max: 10, obtained: 0, isGradeInput: true }
+                ],
+                externals: []
             }
         ];
 
         function getGrade(percentage) {
-            if (percentage >= 90) return { grade: 'O', point: 10 };
-            if (percentage >= 80) return { grade: 'A+', point: 9 };
-            if (percentage >= 70) return { grade: 'A', point: 8 };
-            if (percentage >= 60) return { grade: 'B+', point: 7 };
-            if (percentage >= 50) return { grade: 'B', point: 6 };
-            if (percentage >= 45) return { grade: 'C', point: 5 };
-            if (percentage >= 40) return { grade: 'P', point: 4 };
-            return { grade: 'F', point: 0 };
+            if (percentage >= 96) return { grade: 'A+', point: 10 };
+            if (percentage >= 90) return { grade: 'A', point: 9 };
+            if (percentage >= 85) return { grade: 'B+', point: 8 };
+            if (percentage >= 60) return { grade: 'B', point: 7 };
+            if (percentage >= 50) return { grade: 'C+', point: 6 };
+            if (percentage >= 40) return { grade: 'C', point: 5 };
+            if (percentage >= 35) return { grade: 'D', point: 4 };
+            return { grade: 'E/F', point: 0 };
         }
 
         // Toast Notification System
@@ -2455,9 +2576,33 @@
 
                     <div class="components-grid">
                         ${subject.components.map((comp, compIdx) => {
-                            const isAttendance = comp.name.toLowerCase().includes('attendance');
-                            
-                            if (isAttendance) {
+                            // Handle grade input (GP-1 and Social Internship)
+                            if (comp.isGradeInput) {
+                                return `
+                                    <div class="component-row">
+                                        <div class="component-name">${comp.name}</div>
+                                        <div class="si-dropdown-wrapper">
+                                            <input type="checkbox" id="si-dropdown-touch-${idx}-${compIdx}">
+                                            <label for="si-dropdown-touch-${idx}-${compIdx}" class="si-dropdown-label">
+                                                <span id="si-selected-text-${idx}-${compIdx}">Select Grade</span>
+                                            </label>
+                                            <ul class="si-dropdown-slide">
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 10, 'A+ (96-100)'); return false;">A+ (96-100)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 9, 'A (90-95)'); return false;">A (90-95)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 8, 'B+ (85-89)'); return false;">B+ (85-89)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 7, 'B (60-84)'); return false;">B (60-84)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 6, 'C+ (50-59)'); return false;">C+ (50-59)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 5, 'C (40-49)'); return false;">C (40-49)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 4, 'D (35-39)'); return false;">D (35-39)</a></li>
+                                                <li><a href="#" onclick="selectGrade(${idx}, ${compIdx}, 0, 'E/F (0-34)'); return false;">E/F (0-34)</a></li>
+                                            </ul>
+                                            <input type="hidden" id="marks-${idx}-${compIdx}" value="" data-subject-idx="${idx}" data-comp-idx="${compIdx}" data-max="${comp.max}" data-is-grade-input="true">
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            // Handle switch inputs (GP-1 or attendance)
+                            else if (comp.isSwitch || comp.name.toLowerCase().includes('attendance')) {
                                 return `
                                     <div class="component-row">
                                         <div class="component-name">${comp.name}</div>
@@ -2469,15 +2614,18 @@
                                                     data-subject-idx="${idx}"
                                                     data-comp-idx="${compIdx}"
                                                     data-max="${comp.max}"
+                                                    ${comp.isSwitch ? 'data-is-gp-switch="true"' : ''}
                                                     aria-label="${comp.name} - toggle for full marks"
                                                 >
                                                 <span class="slider"></span>
                                             </label>
                                         </div>
-                                        <div class="component-max">/ ${comp.max}</div>
+                                        <div class="component-max">${comp.isSwitch ? '' : '/ ' + comp.max}</div>
                                     </div>
                                 `;
-                            } else {
+                            }
+                            // Regular number inputs
+                            else {
                                 return `
                                     <div class="component-row">
                                         <div class="component-name">${comp.name}</div>
@@ -2554,21 +2702,31 @@
                         <table class="summary-table">
                             <thead>
                                 <tr>
-                                    <th>Internal Total</th>
-                                    ${subject.externals && subject.externals.length > 0 ? `
-                                        <th>External Total</th>
-                                        <th>Combined Total</th>
-                                    ` : ''}
+                                    ${subject.isGP || subject.isGradeInput ? `
+                                        <th>Status</th>
+                                    ` : `
+                                        <th>Internal Total</th>
+                                        ${subject.externals && subject.externals.length > 0 ? `
+                                            <th>External Total</th>
+                                            <th>Combined Total</th>
+                                        ` : ''}
+                                    `}
                                     <th>Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td id="internal-${idx}">0 / ${subject.components.reduce((sum, c) => sum + c.max, 0)}</td>
-                                    ${subject.externals && subject.externals.length > 0 ? `
-                                        <td id="external-${idx}">0 / ${subject.externals.reduce((sum, e) => sum + e.max, 0)}</td>
-                                        <td id="combined-${idx}">0 / ${subject.components.reduce((sum, c) => sum + c.max, 0) + subject.externals.reduce((sum, e) => sum + e.max, 0)}</td>
-                                    ` : ''}
+                                    ${subject.isGP ? `
+                                        <td id="internal-${idx}">Not Done</td>
+                                    ` : subject.isGradeInput ? `
+                                        <td id="internal-${idx}">Not Selected</td>
+                                    ` : `
+                                        <td id="internal-${idx}">0 / ${subject.components.reduce((sum, c) => sum + c.max, 0)}</td>
+                                        ${subject.externals && subject.externals.length > 0 ? `
+                                            <td id="external-${idx}">0 / ${subject.externals.reduce((sum, e) => sum + e.max, 0)}</td>
+                                            <td id="combined-${idx}">0 / ${subject.components.reduce((sum, c) => sum + c.max, 0) + subject.externals.reduce((sum, e) => sum + e.max, 0)}</td>
+                                        ` : ''}
+                                    `}
                                     <td class="grade-cell"><span class="grade-pill" id="grade-${idx}">-</span></td>
                                 </tr>
                             </tbody>
@@ -2586,6 +2744,11 @@
                         if (input) {
                             if (input.type === 'checkbox') {
                                 // Handle checkboxes with change event
+                                input.addEventListener('change', function() {
+                                    updateSubjectTotal(subjectIdx);
+                                });
+                            } else if (input.tagName === 'SELECT') {
+                                // Handle select dropdowns (grade input)
                                 input.addEventListener('change', function() {
                                     updateSubjectTotal(subjectIdx);
                                 });
@@ -2624,6 +2787,23 @@
             renderSubjectNav();
         }
 
+        function selectGrade(subjectIdx, compIdx, gradePoint, gradeText) {
+            // Update the hidden input value
+            const hiddenInput = document.getElementById(`marks-${subjectIdx}-${compIdx}`);
+            hiddenInput.value = gradePoint;
+            
+            // Update the displayed text
+            const displayText = document.getElementById(`si-selected-text-${subjectIdx}-${compIdx}`);
+            displayText.textContent = gradeText;
+            
+            // Close the dropdown
+            const checkbox = document.getElementById(`si-dropdown-touch-${subjectIdx}-${compIdx}`);
+            checkbox.checked = false;
+            
+            // Update the subject total
+            updateSubjectTotal(subjectIdx);
+        }
+
         function applyScenario(subjectIdx, scenario) {
             const subject = subjects[subjectIdx];
             if (!subject.externals) return;
@@ -2647,6 +2827,43 @@
 
         function updateSubjectTotal(subjectIdx) {
             const subject = subjects[subjectIdx];
+            const isGP1 = subject.code === "24GP-101";
+            const isSocialInternship = subject.code === "24SI-101";
+            
+            // Handle GP-1 and Social Internship (both use grade input dropdowns)
+            if (isGP1 || isSocialInternship) {
+                const gradeElement = document.getElementById(`marks-${subjectIdx}-0`);
+                const gradePoint = parseFloat(gradeElement.value) || 0;
+                
+                // Calculate percentage based on grade point
+                let percentage = 0;
+                if (gradePoint === 10) percentage = 98;
+                else if (gradePoint === 9) percentage = 92.5;
+                else if (gradePoint === 8) percentage = 87;
+                else if (gradePoint === 7) percentage = 72;
+                else if (gradePoint === 6) percentage = 54.5;
+                else if (gradePoint === 5) percentage = 44.5;
+                else if (gradePoint === 4) percentage = 37;
+                else percentage = 0;
+                
+                const { grade, point } = getGrade(percentage);
+                
+                document.getElementById(`internal-${subjectIdx}`).textContent = 
+                    grade || 'Not Selected';
+                
+                const gradeBadge = document.getElementById(`grade-${subjectIdx}`);
+                if (window.innerWidth <= 768) {
+                    gradeBadge.textContent = grade;
+                } else {
+                    gradeBadge.textContent = `${grade} (${point} GP)`;
+                }
+                gradeBadge.className = `grade-pill grade-${grade.toLowerCase().replace(/\//g, '-')}`;
+                
+                subject.percentage = percentage;
+                subject.gradePoint = point;
+                updateNavButtonStatus(subjectIdx);
+                return;
+            }
             
             // Detect subject type based on components
             const isHybrid = subject.code === "24CSH-202" || subject.code === "24CSH-204";
@@ -2882,6 +3099,37 @@
             // Update both desktop and mobile nav buttons
             const navBtns = document.querySelectorAll(`.subject-nav-btn[data-subject-idx="${subjectIdx}"]`);
             
+            const subject = subjects[subjectIdx];
+            const isGP1 = subject.code === "24GP-101";
+            const isSocialInternship = subject.code === "24SI-101";
+            
+            // Special handling for GP-1 and Social Internship
+            if (isGP1 || isSocialInternship) {
+                const isComplete = parseFloat(document.getElementById(`marks-${subjectIdx}-0`)?.value) > 0;
+                
+                const bigTickIcon = `<svg class="nav-big-tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                
+                navBtns.forEach((navBtn) => {
+                    const smallTick = navBtn.querySelector('.nav-tick');
+                    const bigTick = navBtn.querySelector('.nav-big-tick');
+                    const numberSpan = navBtn.querySelector('.nav-number');
+                    if (smallTick) smallTick.remove();
+                    if (bigTick) bigTick.remove();
+                    
+                    if (isComplete) {
+                        // Show big tick for completion
+                        navBtn.classList.add('complete', 'full-complete');
+                        if (numberSpan) numberSpan.style.display = 'none';
+                        navBtn.insertAdjacentHTML('beforeend', bigTickIcon);
+                    } else {
+                        // No completion
+                        navBtn.classList.remove('complete', 'full-complete');
+                        if (numberSpan) numberSpan.style.display = '';
+                    }
+                });
+                return;
+            }
+            
             const isInternalComplete = isSubjectInternalComplete(subjectIdx);
             const isExternalComplete = isSubjectExternalComplete(subjectIdx);
             
@@ -2941,6 +3189,18 @@
             let hasMissingInternal = false;
             
             subjects.forEach((subject, idx) => {
+                const isGP1 = subject.code === "24GP-101";
+                const isSocialInternship = subject.code === "24SI-101";
+                
+                // Skip validation for GP-1 and Social Internship - they're optional/special
+                if (isGP1 || isSocialInternship) {
+                    const element = document.getElementById(`marks-${idx}-0`);
+                    if (element && parseFloat(element.value) > 0) {
+                        hasAnyInput = true;
+                    }
+                    return; // Skip further validation for these subjects
+                }
+                
                 // Check internal marks
                 subject.components.forEach((comp, compIdx) => {
                     const element = document.getElementById(`marks-${idx}-${compIdx}`);
@@ -2978,6 +3238,27 @@
             const breakdown = [];
 
             subjects.forEach((subject, idx) => {
+                const isGP1 = subject.code === "24GP-101";
+                const isSocialInternship = subject.code === "24SI-101";
+                
+                // Handle GP-1 and Social Internship separately
+                if (isGP1 || isSocialInternship) {
+                    if (subject.percentage !== undefined && subject.gradePoint !== undefined) {
+                        totalCredits += subject.credits;
+                        totalGradePoints += (subject.credits * subject.gradePoint);
+                        
+                        breakdown.push({
+                            name: subject.name,
+                            code: subject.code,
+                            credits: subject.credits,
+                            percentage: subject.percentage,
+                            grade: getGrade(subject.percentage).grade,
+                            gradePoint: subject.gradePoint
+                        });
+                    }
+                    return;
+                }
+                
                 const isHybrid = subject.code === "24CSH-202" || subject.code === "24CSH-204";
                 const isPracticalOnly = subject.code === "24CSP-203";
                 const isSoftSkills = subject.code === "24TDP-211" || subject.code === "24UCT-296";
@@ -2988,6 +3269,17 @@
                     if (element.type === 'checkbox') {
                         const maxValue = parseFloat(element.getAttribute('data-max'));
                         return element.checked ? maxValue : 0;
+                    }
+                    if (element.tagName === 'SELECT') {
+                        const gradePoint = parseFloat(element.value) || 0;
+                        if (gradePoint === 10) return 98;
+                        if (gradePoint === 9) return 92.5;
+                        if (gradePoint === 8) return 87;
+                        if (gradePoint === 7) return 72;
+                        if (gradePoint === 6) return 54.5;
+                        if (gradePoint === 5) return 44.5;
+                        if (gradePoint === 4) return 37;
+                        return 0;
                     }
                     return parseFloat(element.value) || 0;
                 };
@@ -3119,7 +3411,6 @@
             document.getElementById('sgpa-value').textContent = sgpa.toFixed(2);
             document.getElementById('total-credits').textContent = totalCredits;
             document.getElementById('total-marks').textContent = totalMarks.toFixed(1);
-            document.getElementById('grade-points').textContent = totalGradePoints.toFixed(1);
 
             // Show overall grade badge
             const gradeBadge = document.getElementById('sgpa-grade-badge');
@@ -3251,6 +3542,17 @@
                 if (element.type === 'checkbox') {
                     return element.checked ? (parseFloat(element.dataset.max) || 0) : 0;
                 }
+                if (element.tagName === 'SELECT') {
+                    const gradePoint = parseFloat(element.value) || 0;
+                    if (gradePoint === 10) return 98;
+                    if (gradePoint === 9) return 92.5;
+                    if (gradePoint === 8) return 87;
+                    if (gradePoint === 7) return 72;
+                    if (gradePoint === 6) return 54.5;
+                    if (gradePoint === 5) return 44.5;
+                    if (gradePoint === 4) return 37;
+                    return 0;
+                }
                 return parseFloat(element.value) || 0;
             };
 
@@ -3315,6 +3617,17 @@
                 if (!element) return 0;
                 if (element.type === 'checkbox') {
                     return element.checked ? (parseFloat(element.dataset.max) || 0) : 0;
+                }
+                if (element.tagName === 'SELECT') {
+                    const gradePoint = parseFloat(element.value) || 0;
+                    if (gradePoint === 10) return 98;
+                    if (gradePoint === 9) return 92.5;
+                    if (gradePoint === 8) return 87;
+                    if (gradePoint === 7) return 72;
+                    if (gradePoint === 6) return 54.5;
+                    if (gradePoint === 5) return 44.5;
+                    if (gradePoint === 4) return 37;
+                    return 0;
                 }
                 return parseFloat(element.value) || 0;
             };
@@ -3382,8 +3695,7 @@
             summaryRows.push(['Your Estimated SGPA', sgpa.toFixed(2)]);
             summaryRows.push(['Grade', `${sgpaGrade.grade} Grade (${sgpaGrade.point} GP)`]);
             summaryRows.push(['Total Credits', totalCredits]);
-            summaryRows.push(['Total Marks', totalMarks.toFixed(1)]);
-            summaryRows.push(['Grade Points', totalGradePoints.toFixed(1)]);
+            summaryRows.push(['Total Marks you earned', totalMarks.toFixed(1)]);
             summaryRows.push([]);  // Empty row
             summaryRows.push(['Subject-wise Breakdown']);
 
@@ -3455,6 +3767,18 @@
                     if (!element) return 0;
                     if (element.type === 'checkbox') {
                         return element.checked ? (parseFloat(element.dataset.max) || 0) : 0;
+                    }
+                    if (element.tagName === 'SELECT') {
+                        // For grade input, convert grade point to percentage-based value
+                        const gradePoint = parseFloat(element.value) || 0;
+                        if (gradePoint === 10) return 98;
+                        if (gradePoint === 9) return 92.5;
+                        if (gradePoint === 8) return 87;
+                        if (gradePoint === 7) return 72;
+                        if (gradePoint === 6) return 54.5;
+                        if (gradePoint === 5) return 44.5;
+                        if (gradePoint === 4) return 37;
+                        return 0;
                     }
                     return parseFloat(element.value) || 0;
                 };
@@ -3528,7 +3852,6 @@
                 summaryData.push(['SGPA updated:', sgpa.toFixed(2)]);
                 summaryData.push(['Total Credits', totalCredits]);
                 summaryData.push(['Total Marks', totalMarks.toFixed(1)]);
-                summaryData.push(['Grade Points', totalGradePoints.toFixed(1)]);
                 summaryData.push([]);  // Empty row
                 summaryData.push(['Subject-wise Breakdown']);
 
