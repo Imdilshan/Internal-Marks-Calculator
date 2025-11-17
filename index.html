@@ -1,343 +1,518 @@
 <!doctype html>
-<html lang=en>
-<head>
-<meta charset=UTF-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<link rel=icon type=image/png href=favicon.png>
-<meta property=og:title content="Internal Marks Calculator">
-<meta property=og:description content="Calculate Internal marks and Grade easily.">
-<meta property=og:type content=website>
-<meta property=og:url content=https://imdilshan.github.io/Internal-Marks-Calculator/ >
-<meta property=og:image content=https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg>
-<meta property=og:image:width content=1200>
-<meta property=og:image:height content=630>
-<meta name=twitter:card content=summary_large_image>
-<meta name=twitter:title content="Internal Marks Calculator">
-<meta name=twitter:description content="Calculate Internal marks and Grade easily.">
-<meta name=twitter:image content=https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg>
-<title>SGPA Estimator</title>
-<meta name=description content="Estimate your SGPA with internal marks and projected external scores">
-<script src=https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js></script>
-<style>:root{--color-primary:#0066FF;--color-primary-700:#0047C1;--color-primary-100:#EAF2FF;--color-accent:#00C2A8;--color-accent-700:#00997A;--neutral-900:#0F1724;--neutral-700:#374151;--neutral-500:#6B7280;--neutral-400:#9CA3AF;--neutral-200:#E5E7EB;--neutral-100:#F3F4F6;--neutral-50:#FBFDFF;--success:#16A34A;--warning:#F59E0B;--danger:#DC2626;--font-sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;--fs-xxl:36px;--fs-xl:28px;--fs-lg:22px;--fs-md:18px;--fs-sm:16px;--fs-xs:13px;--leading-regular:1.4;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--radius-sm:4px;--radius-md:8px;--radius-lg:12px;--shadow-1:0 4px 10px rgba(15, 23, 36, 0.06);--shadow-2:0 8px 30px rgba(15, 23, 36, 0.08)}[data-theme=dark]{--color-primary:#3B82F6;--color-primary-700:#2563EB;--color-primary-100:#0a0a0a;--color-accent:#3B82F6;--color-accent-700:#2563EB;--neutral-900:#FFFFFF;--neutral-700:#E5E5E5;--neutral-500:#A3A3A3;--neutral-400:#737373;--neutral-200:#262626;--neutral-100:#171717;--neutral-50:#0a0a0a;--success:#22C55E;--warning:#F59E0B;--danger:#EF4444;--shadow-1:0 4px 10px rgba(0, 0, 0, 0.5);--shadow-2:0 8px 30px rgba(0, 0, 0, 0.8)}*{margin:0;padding:0;box-sizing:border-box}::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--neutral-100);border-radius:var(--radius-lg);transition:background-color .8s ease .4s}::-webkit-scrollbar-thumb{background:linear-gradient(135deg,var(--color-primary),var(--color-primary-700));border-radius:var(--radius-lg);border:2px solid var(--neutral-100);transition:background .8s ease .4s,border-color .8s ease .4s}::-webkit-scrollbar-thumb:hover{background:linear-gradient(135deg,var(--color-primary-700),var(--color-primary));transition:background .2s ease}[data-theme=dark] ::-webkit-scrollbar-track{background:var(--neutral-200)}[data-theme=dark] ::-webkit-scrollbar-thumb{background:linear-gradient(135deg,var(--color-primary),var(--color-accent));border:2px solid var(--neutral-200)}[data-theme=dark] ::-webkit-scrollbar-thumb:hover{background:linear-gradient(135deg,var(--color-accent),var(--color-primary))}html{scrollbar-width:auto;scrollbar-color:var(--color-primary) var(--neutral-100);transition:scrollbar-color .8s ease .4s}[data-theme=dark] html{scrollbar-color:var(--color-primary) var(--neutral-200)}body{font-family:var(--font-sans);background:linear-gradient(135deg,var(--color-primary) 0,var(--color-primary-700) 100%);color:var(--neutral-900);line-height:var(--leading-regular);min-height:100vh;padding:var(--space-4);transition:background .3s ease}[data-theme=dark] body{background:#000}.header{text-align:center;color:#fff;padding:var(--space-6) 0;max-width:1200px;margin:0 auto;position:relative}.dev-profiles{position:absolute;top:5%;right:2%;z-index:10}.profile-stack{position:relative;width:70px;height:70px}.profile-item{position:absolute;transition:transform .3s ease,box-shadow .3s ease}.profile-item:first-child{top:0;left:0;z-index:2}.profile-item:last-child{top:20px;left:20px;z-index:1}.profile-img{width:55px;height:55px;border-radius:50%;border:3px solid #fff;transition:all .3s ease;cursor:pointer;display:block}.profile-img.primary{box-shadow:0 4px 12px rgba(0,0,0,.3)}.profile-img.secondary{width:48px;height:48px;border:2px solid rgba(255,255,255,.8);box-shadow:0 2px 8px rgba(0,0,0,.2)}.profile-item:hover .profile-img{transform:scale(1.1);box-shadow:0 8px 25px rgba(0,0,0,.4)}.profile-item:hover{z-index:5!important}.profile-item::before{content:attr(data-tooltip);position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;white-space:nowrap;opacity:0;visibility:hidden;transition:all .3s ease;pointer-events:none}.profile-item:hover::before{opacity:1;visibility:visible}[data-theme=dark] .profile-img{border-color:var(--neutral-200)}[data-theme=dark] .profile-img.secondary{border-color:rgba(255,255,255,.6)}[data-theme=dark] .profile-item::before{background:rgba(255,255,255,.95);color:#333}@media (max-width:768px){.dev-profiles{top:var(--space-2);right:var(--space-2)}.profile-stack{width:60px;height:60px}.profile-img{width:48px;height:48px}.profile-img.secondary{width:42px;height:42px}.profile-item:last-child{top:15px;left:15px}}.header h1{font-size:var(--fs-xxl);font-weight:700;margin-bottom:var(--space-2)}.header p{font-size:var(--fs-md);opacity:.95;max-width:600px;margin:0 auto}.container{max-width:1200px;margin:0 auto;background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow-2);overflow:visible;transition:background .3s ease}[data-theme=dark] .container{background:var(--neutral-100)}.page-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s ease,visibility .5s ease}.page-loader.hidden{opacity:0;visibility:hidden}.loader{--dim:3rem;width:var(--dim);height:var(--dim);position:relative;animation:spin988 2s linear infinite}.loader .circle{--color:#3B82F6;--dim:1.2rem;width:var(--dim);height:var(--dim);background-color:var(--color);border-radius:50%;position:absolute}.loader .circle:first-child{top:0;left:0}.loader .circle:nth-child(2){top:0;right:0}.loader .circle:nth-child(3){bottom:0;left:0}.loader .circle:nth-child(4){bottom:0;right:0}@keyframes spin988{0%{transform:scale(1) rotate(0)}20%,25%{transform:scale(1.3) rotate(90deg)}45%,50%{transform:scale(1) rotate(180deg)}70%,75%{transform:scale(1.3) rotate(270deg)}100%,95%{transform:scale(1) rotate(360deg)}}.subject-nav{display:flex;gap:12px;z-index:999}.subject-nav-desktop{position:fixed;left:20px;top:10vh;flex-direction:column}.subject-nav-mobile{flex-direction:row;flex-wrap:wrap;justify-content:center;margin-top:var(--space-4);display:none}@media (min-width:1025px){.subject-nav-desktop{display:flex}.subject-nav-mobile{display:none!important}}@media (max-width:1024px){.subject-nav-desktop{display:none!important}.subject-nav-mobile{display:flex}}.subject-nav-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);color:#fff;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;backdrop-filter:blur(10px);position:relative}.subject-nav-btn .nav-number{position:relative;z-index:1}.subject-nav-btn .nav-tick{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:#22c55e;border-radius:50%;padding:2px;stroke:white;box-shadow:0 2px 6px rgba(34,197,94,.4)}.subject-nav-btn .nav-big-tick{color:#fff;filter:drop-shadow(0 0 6px rgba(34, 197, 94, .4));animation:tickPop .3s ease-out}@keyframes tickPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}.subject-nav-btn.complete{border-color:#22c55e;background:rgba(34,197,94,.15)}.subject-nav-btn.full-complete{background:rgba(34,197,94,.25);box-shadow:0 0 15px rgba(34,197,94,.3)}.subject-nav-btn:hover{transform:scale(1.15);background:rgba(255,255,255,.4);box-shadow:0 4px 12px rgba(0,0,0,.2)}.subject-nav-btn.active{background:var(--color-accent);border-color:var(--color-accent);transform:scale(1.2)}.subject-nav-desktop .subject-nav-btn::after{content:attr(data-tooltip);position:absolute;left:60px;background:rgba(0,0,0,.9);color:#fff;padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,.3)}[data-theme=dark] .subject-nav-desktop .subject-nav-btn::after{background:rgba(255,255,255,.95);color:#000}.subject-nav-desktop .subject-nav-btn:hover::after{opacity:1}.subject-nav-desktop .subject-nav-btn::before{content:'';position:absolute;left:52px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:6px solid rgba(0,0,0,.9);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:1000}[data-theme=dark] .subject-nav-desktop .subject-nav-btn::before{border-right-color:rgba(255,255,255,.95)}.subject-nav-desktop .subject-nav-btn:hover::before{opacity:1}.help-nav-btn{width:45px;height:45px;font-size:13px;font-weight:600}.help-nav-btn::after{content:attr(data-tooltip);left:65px;min-width:120px}.help-nav-btn::before{left:57px}@media (max-width:768px){.subject-nav{left:10px;top:15vh;gap:8px}.subject-nav-btn{width:32px;height:32px;font-size:12px}.help-nav-btn{width:36px;height:36px;font-size:11px}}.tabs{border-bottom:2px solid var(--neutral-200);background:var(--neutral-50);display:flex;justify-content:space-between;align-items:center}[data-theme=dark] .tabs{background:#0a0a0a;border-bottom-color:var(--neutral-200)}.tab-list{display:flex;list-style:none;padding:0 var(--space-5)}.tab-actions{display:flex;gap:var(--space-2);padding:0 var(--space-5)}.action-icon-btn{padding:var(--space-3);background:0 0;border:1px solid var(--neutral-300);border-radius:8px;color:var(--neutral-600);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}.action-icon-btn:hover{background:var(--neutral-100);border-color:var(--color-primary);color:var(--color-primary);transform:translateY(-2px)}[data-theme=dark] .action-icon-btn{border-color:var(--neutral-700);color:var(--neutral-400)}[data-theme=dark] .action-icon-btn:hover{background:rgba(255,255,255,.05);border-color:var(--color-primary);color:var(--color-primary)}#excel-download-btn{display:none}.tab{padding:var(--space-4) var(--space-5);background:0 0;border:none;font-size:var(--fs-sm);font-weight:600;color:var(--neutral-500);cursor:pointer;position:relative;transition:color .2s;display:flex;align-items:center;gap:var(--space-2)}.tab:hover{color:var(--neutral-900)}.tab:focus-visible{outline:3px solid rgba(0,102,255,.16);outline-offset:-3px}.tab[aria-selected=true]{color:var(--color-primary)}.tab[aria-selected=true]::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--color-primary)}.tab-icon svg{width:20px!important;height:20px!important;stroke:currentColor;transition:all .2s}.tab-text{display:inline;line-height:1}#tab-results{display:none;padding-left:var(--space-3);padding-right:var(--space-3)}#tab-results.show-tab{display:block}.tab-panel{padding:var(--space-6);animation:fadeIn .3s ease;overflow:visible}.tab-panel[hidden]{display:none}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media (prefers-reduced-motion:reduce){.tab-panel{animation:none}}.subject-card{background:var(--neutral-50);border:1px solid var(--neutral-200);border-radius:var(--radius-md);padding:var(--space-5);margin-bottom:var(--space-4);transition:box-shadow .2s}[data-theme=dark] .subject-card{background:#0a0a0a;border-color:var(--neutral-200)}.subject-card:hover{box-shadow:var(--shadow-1)}.subject-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);flex-wrap:wrap;gap:var(--space-3)}.subject-name{font-size:var(--fs-md);font-weight:600;color:var(--neutral-900)}.subject-meta{display:flex;gap:var(--space-3);font-size:var(--fs-xs);color:var(--neutral-500)}.badge{background:var(--color-primary);color:#fff;padding:var(--space-1) var(--space-3);border-radius:var(--radius-sm);font-size:var(--fs-xs);font-weight:500}.components-grid{display:grid;gap:var(--space-3)}.component-name{font-size:var(--fs-sm);color:var(--neutral-700)}.component-max{font-size:var(--fs-sm);color:var(--neutral-500);font-weight:600;white-space:nowrap}input[type=number]{width:100px;max-width:100px;padding:var(--space-2) var(--space-3);border:2px solid var(--neutral-200);border-radius:var(--radius-sm);font-size:var(--fs-sm);transition:all .2s;background:#fff;color:var(--neutral-900)}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield;appearance:textfield}.component-row{display:grid;grid-template-columns:2fr auto auto;gap:var(--space-3);align-items:center;padding:var(--space-3);background:#fff;border-radius:var(--radius-sm);position:relative}[data-theme=dark] .component-row{background:var(--neutral-100)}input[type=number]{position:relative;padding-right:36px;width:100px;max-width:100px}input[type=number]{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%230066FF" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%230066FF" d="M6 8L0 0h12z"/></svg>');background-position:calc(100% - 10px) 8px,calc(100% - 10px) calc(100% - 8px);background-size:12px 8px,12px 8px;background-repeat:no-repeat}[data-theme=dark] input[type=number]{background-color:var(--neutral-50);border-color:var(--neutral-400);color:var(--neutral-900);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%233B82F6" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%233B82F6" d="M6 8L0 0h12z"/></svg>');background-position:calc(100% - 10px) 8px,calc(100% - 10px) calc(100% - 8px);background-size:12px 8px,12px 8px;background-repeat:no-repeat}input[type=number]:hover{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%2300C2A8" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%2300C2A8" d="M6 8L0 0h12z"/></svg>')}[data-theme=dark] input[type=number]:hover{background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%2314B8A6" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%2314B8A6" d="M6 8L0 0h12z"/></svg>')}input[type=number]:focus{outline:0;border-color:var(--color-primary);box-shadow:0 0 0 3px rgba(0,102,255,.1)}[data-theme=dark] input[type=number]:focus{box-shadow:0 0 0 3px rgba(59,130,246,.2)}input[type=number].error{border-color:var(--danger);background-color:rgba(220,38,38,.05);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23DC2626" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23DC2626" d="M6 8L0 0h12z"/></svg>')}[data-theme=dark] input[type=number].error{background-color:rgba(239,68,68,.1);background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23EF4444" d="M6 0l6 8H0z"/></svg>'),url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23EF4444" d="M6 8L0 0h12z"/></svg>')}.checkbox-wrapper-63 input[type=checkbox]{visibility:hidden;display:none}.checkbox-wrapper-63 *,.checkbox-wrapper-63 ::after,.checkbox-wrapper-63 ::before{box-sizing:border-box}.checkbox-wrapper-63 .switch{font-size:1rem;position:relative;display:inline-block;width:4em;height:2em}.checkbox-wrapper-63 .slider{position:absolute;cursor:pointer;inset:0;background-color:#eee;transition:.4s;border-radius:.5em;box-shadow:0 .2em #dfd9d9}.checkbox-wrapper-63 .slider:before{position:absolute;content:"";height:1.5em;width:1.4em;border-radius:.3em;left:.3em;bottom:.7em;background-color:#ffa07a;transition:.4s;box-shadow:0 .4em #bcb4b4}.checkbox-wrapper-63 .slider:hover::before{box-shadow:0 .2em #bcb4b4;bottom:.5em}.checkbox-wrapper-63 input:checked+.slider::before{transform:translateX(2em);background:#90ee90}[data-theme=dark] .checkbox-wrapper-63 .slider{background-color:#333;box-shadow:0 .2em #222}[data-theme=dark] .checkbox-wrapper-63 .slider:before{box-shadow:0 .4em #1a1a1a}[data-theme=dark] .checkbox-wrapper-63 .slider:hover::before{box-shadow:0 .2em #1a1a1a}.external-section{margin-top:var(--space-4);padding:var(--space-4);background:var(--color-primary-100);border-radius:var(--radius-md);border:2px dashed rgba(0,102,255,.3)}[data-theme=dark] .external-section{background:#0d0d0d}.external-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-3);flex-wrap:wrap;gap:var(--space-3)}.external-title{font-size:var(--fs-sm);font-weight:600;color:var(--neutral-900)}.scenario-buttons{display:flex;gap:var(--space-2);flex-wrap:wrap}.btn-scenario{padding:var(--space-1) var(--space-3);background:#fff;border:1px solid var(--color-primary);border-radius:var(--radius-sm);color:var(--color-primary);font-size:var(--fs-xs);font-weight:500;cursor:pointer;transition:all .2s}[data-theme=dark] .btn-scenario{background:var(--neutral-100);border-color:var(--color-primary);color:var(--color-primary)}.btn-scenario:hover{background:var(--color-primary);color:#fff}.btn-scenario:focus-visible{outline:3px solid rgba(0,102,255,.16)}.subject-summary{margin-top:var(--space-4);background:#fff;border-radius:var(--radius-sm);border:2px solid var(--neutral-200);overflow:hidden}[data-theme=dark] .subject-summary{background:var(--neutral-100);border-color:var(--neutral-200)}.summary-table{width:100%;border-collapse:collapse}.summary-table td,.summary-table th{padding:var(--space-3);text-align:center;font-size:var(--fs-sm);border-right:1px solid var(--neutral-200)}.summary-table td:last-child,.summary-table th:last-child{border-right:none}.summary-table th{background:var(--neutral-100);font-weight:600;color:var(--neutral-700);text-transform:uppercase;font-size:var(--fs-xs);letter-spacing:.5px}[data-theme=dark] .summary-table th{background:var(--neutral-50);color:var(--neutral-500)}.summary-table td{color:var(--neutral-900);font-weight:600;background:#fff}[data-theme=dark] .summary-table td{background:var(--neutral-100)}.summary-table .grade-cell{background:var(--color-primary-100)}@media (max-width:768px){.summary-table{font-size:var(--fs-xs)}.summary-table td,.summary-table th{padding:var(--space-2)}}.grade-pill{display:inline-block;padding:var(--space-1) var(--space-3);background:linear-gradient(135deg,var(--color-primary),var(--color-primary-700));color:#fff;border-radius:var(--radius-md);font-weight:700;font-size:var(--fs-md)}.btn{padding:var(--space-3) var(--space-5);border:none;border-radius:var(--radius-md);font-size:var(--fs-sm);font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:var(--space-2)}.btn:focus-visible{outline:3px solid rgba(0,102,255,.16);outline-offset:2px}.btn--cta{background:var(--color-accent);color:#fff;font-size:var(--fs-md);padding:var(--space-4) var(--space-6)}.btn--cta:hover{background:var(--color-accent-700);transform:translateY(-2px);box-shadow:var(--shadow-1)}.btn--secondary{background:#fff;color:var(--color-primary);border:2px solid var(--color-primary)}.btn--secondary:hover{background:var(--color-primary-100)}.action-bar{display:flex;gap:var(--space-3);justify-content:space-between;align-items:center}.action-bar button:last-child{padding:0;margin:0;border:none;background:0 0;cursor:pointer}.action-bar button:last-child{--primary-color:#111;--hovered-color:#c84747;position:relative;display:flex;font-weight:600;font-size:20px;gap:.5rem;align-items:center}.action-bar button:last-child p{margin:0;position:relative;font-size:20px;color:var(--primary-color)}.action-bar button:last-child::after{position:absolute;content:"";width:0;left:0;bottom:-7px;background:var(--hovered-color);height:2px;transition:.3s ease-out}.action-bar button:last-child p::before{position:absolute;width:0%;inset:0;color:var(--hovered-color);overflow:hidden;transition:.3s ease-out}.action-bar button:last-child:hover::after{width:100%}.action-bar button:last-child:hover p::before{width:100%}.action-bar button:last-child:hover svg{transform:translateX(4px);color:var(--hovered-color)}.action-bar button:last-child svg{color:var(--primary-color);transition:.2s;position:relative;width:15px;transition-delay:0.2s}[data-theme=dark] .action-bar button:last-child{--primary-color:#fff;--hovered-color:#ff6b6b}.action-bar button:first-child{padding:0;margin:0;border:none;background:0 0;cursor:pointer;--primary-color:#111;--hovered-color:#0066FF;position:relative;display:flex;font-weight:600;font-size:20px;gap:.5rem;align-items:center}.action-bar button:first-child p{margin:0;position:relative;font-size:20px;color:var(--primary-color)}.action-bar button:first-child::after{position:absolute;content:"";width:0;left:0;bottom:-7px;background:var(--hovered-color);height:2px;transition:.3s ease-out}.action-bar button:first-child p::before{position:absolute;content:"";width:0%;inset:0;color:var(--hovered-color);overflow:hidden;transition:.3s ease-out}.action-bar button:first-child:hover::after{width:100%}.action-bar button:first-child:hover p::before{width:100%}.action-bar button:first-child:hover svg{transform:translateY(4px);color:var(--hovered-color)}.action-bar button:first-child svg{color:var(--primary-color);transition:.2s;position:relative;width:15px;transition-delay:0.2s}[data-theme=dark] .action-bar button:first-child{--primary-color:#fff;--hovered-color:#3B82F6}.toast-container{position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:var(--space-2);pointer-events:none}.toast{background:#fff;color:var(--neutral-900);padding:var(--space-4) var(--space-5);border-radius:var(--radius-md);box-shadow:0 10px 40px rgba(0,0,0,.15);display:flex;align-items:center;gap:var(--space-3);min-width:300px;max-width:400px;pointer-events:auto;animation:slideIn .3s ease-out;border-left:4px solid}.toast.success{border-left-color:#22c55e}.toast.error{border-left-color:#ef4444}.toast.warning{border-left-color:#f59e0b}.toast-icon{flex-shrink:0;width:24px;height:24px}.toast.success .toast-icon{color:#22c55e}.toast.error .toast-icon{color:#ef4444}.toast.warning .toast-icon{color:#f59e0b}.toast-content{flex:1}.toast-title{font-weight:700;font-size:var(--fs-sm);margin-bottom:var(--space-1)}.toast-message{font-size:var(--fs-xs);color:var(--neutral-500);line-height:1.4}.toast-close{background:0 0;border:none;cursor:pointer;padding:0;color:var(--neutral-400);transition:color .2s;flex-shrink:0}.toast-close:hover{color:var(--neutral-700)}[data-theme=dark] .toast{background:#1a1a1a;color:#fff;box-shadow:0 10px 40px rgba(0,0,0,.4)}[data-theme=dark] .toast-message{color:var(--neutral-400)}[data-theme=dark] .toast-close{color:var(--neutral-500)}[data-theme=dark] .toast-close:hover{color:var(--neutral-300)}@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(400px);opacity:0}}.toast.removing{animation:slideOut .3s ease-in forwards}.results-hero{text-align:center;padding:var(--space-6);background:linear-gradient(135deg,var(--color-primary-100),var(--neutral-50));border-radius:var(--radius-lg);margin-bottom:var(--space-5);position:relative;overflow:hidden}.results-hero::before{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,102,255,.05) 0,transparent 70%);animation:pulse 4s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.1);opacity:.8}}[data-theme=dark] .results-hero{background:linear-gradient(135deg,#0d0d0d,#0a0a0a)}[data-theme=dark] .results-hero::before{background:radial-gradient(circle,rgba(59,130,246,.1) 0,transparent 70%)}.sgpa-display{font-size:80px;font-weight:800;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-700));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin:var(--space-3) 0;position:relative;z-index:1;letter-spacing:-.02em}.sgpa-label{font-size:var(--fs-md);color:var(--neutral-500);font-weight:600;text-transform:uppercase;letter-spacing:1.5px;position:relative;z-index:1}.sgpa-grade-badge{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-4);background:linear-gradient(135deg,var(--color-accent),var(--color-accent-700));color:#fff;border-radius:50px;font-weight:700;font-size:var(--fs-md);margin-top:var(--space-3);position:relative;z-index:1;box-shadow:0 4px 12px rgba(0,194,168,.3)}.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);margin-bottom:var(--space-5)}.result-card{background:var(--neutral-50);padding:var(--space-5);border-radius:var(--radius-md);border:2px solid var(--neutral-200);position:relative;overflow:hidden;transition:all .3s ease}.result-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--color-primary),var(--color-accent));opacity:0;transition:opacity .3s ease}.result-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:var(--color-primary)}.result-card:hover::before{opacity:1}[data-theme=dark] .result-card{background:#0a0a0a;border-color:var(--neutral-200)}.result-label{font-size:var(--fs-xs);color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:var(--space-2);font-weight:600;display:flex;align-items:center;gap:var(--space-2)}.result-value{font-size:var(--fs-xxl);font-weight:800;color:var(--neutral-900);line-height:1.2}.breakdown-section{margin-top:var(--space-5)}.breakdown-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4);flex-wrap:wrap;gap:var(--space-3)}.breakdown-header h3{color:var(--neutral-900);font-size:var(--fs-lg);font-weight:700;display:flex;align-items:center;gap:var(--space-2);margin:0}.breakdown-list{list-style:none;display:grid;gap:var(--space-3)}.breakdown-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:var(--space-4);padding:var(--space-4);background:var(--neutral-50);border-radius:var(--radius-md);border:1px solid var(--neutral-200);transition:all .2s ease}.breakdown-item:hover{box-shadow:var(--shadow-1);border-color:var(--color-primary);transform:translateX(4px)}[data-theme=dark] .breakdown-item{background:#0a0a0a;border-color:var(--neutral-200)}.breakdown-icon{width:48px;height:48px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--fs-md);background:linear-gradient(135deg,var(--color-primary-100),var(--neutral-100));color:var(--color-primary);flex-shrink:0}[data-theme=dark] .breakdown-icon{background:linear-gradient(135deg,#1a1a1a,#0d0d0d)}.breakdown-info{display:flex;flex-direction:column;gap:var(--space-1);min-width:0}.breakdown-course{font-weight:700;color:var(--neutral-900);font-size:var(--fs-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.breakdown-code{font-size:var(--fs-xs);color:var(--neutral-500);font-family:monospace}.breakdown-stats{display:flex;flex-direction:column;align-items:flex-end;gap:var(--space-1);flex-shrink:0}.breakdown-calc{font-size:var(--fs-xs);color:var(--neutral-500);font-family:monospace}.breakdown-grade{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1) var(--space-3);background:linear-gradient(135deg,var(--color-primary),var(--color-primary-700));color:#fff;border-radius:50px;font-weight:700;font-size:var(--fs-xs)}.help-content{max-width:800px;margin:0 auto}.help-section{margin-bottom:var(--space-5)}.help-section h3{font-size:var(--fs-lg);color:var(--neutral-900);margin-bottom:var(--space-3)}.help-section h4{color:var(--neutral-900)}.help-section p{color:var(--neutral-700);line-height:1.6}.formula-box{background:var(--neutral-50);padding:var(--space-4);border-radius:var(--radius-md);border-left:4px solid var(--color-accent);font-family:monospace;font-size:var(--fs-sm);margin:var(--space-3) 0}[data-theme=dark] .formula-box{background:#0a0a0a;border-left-color:var(--color-accent)}@media (max-width:768px){.header h1{font-size:var(--fs-xl)}.component-row{grid-template-columns:1fr auto auto;gap:var(--space-2)}input[type=number]{width:90px;max-width:90px}.subject-header{flex-direction:column;align-items:flex-start}.sgpa-display{font-size:48px}}@media (prefers-reduced-motion:reduce){*,::after,::before{animation-duration:0s!important;animation-iteration-count:1!important;transition-duration:0s!important}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}@media (max-width:1024px){.tab-panel{padding:var(--space-4)}input[type=number]{background-image:none!important;padding-right:var(--space-2)}.badge{display:none!important}.tab-text{display:none}.tab-icon{display:inline-flex}.tab-icon svg{width:20px!important;height:20px!important}h1{font-size:var(--fs-md)}h2{font-size:var(--fs-sm)}.main-content h2,.tab-header h2{font-size:var(--fs-sm)}.tab-buttons button{font-size:var(--fs-xs);padding:var(--space-2) var(--space-3)}.component-name{font-size:var(--fs-xs)}.component-max{font-size:var(--fs-xs)}input[type=number]{font-size:var(--fs-xs);padding:var(--space-1) var(--space-2)}.scenario-buttons button{font-size:var(--fs-xs);padding:var(--space-2) var(--space-3)}.external-title{font-size:var(--fs-xs)}.results h3{font-size:var(--fs-sm)}.result-item{font-size:var(--fs-xs)}.summary-table{table-layout:fixed}.summary-table td,.summary-table th{font-size:calc(var(--fs-xs) * .85);padding:4px 6px;width:25%}.summary-table th{font-size:calc(var(--fs-xs) * .75);letter-spacing:.3px}.desktop-text{display:none}.mobile-text{display:inline}}@media (min-width:1025px){.tab-text{display:inline}.tab-icon svg{width:20px!important;height:20px!important}.desktop-text{display:inline}.mobile-text{display:none}}.si-dropdown-wrapper{position:relative;width:100%}.si-dropdown-wrapper .si-dropdown-label{padding:12px 16px;background:#2d2f31;color:#fff;font-size:var(--fs-sm);font-variant:small-caps;cursor:pointer;display:block;border-radius:var(--radius-sm);user-select:none}.si-dropdown-wrapper .si-dropdown-label::after{float:right;right:10%;content:"+";font-size:1em;transition:transform .3s ease}.si-dropdown-wrapper .si-dropdown-slide{position:absolute;top:100%;left:0;right:0;width:100%;height:0;overflow:hidden;text-align:center;transition:height .3s ease;background:#fff;border:1px solid #e5e5e5;border-radius:0 0 var(--radius-sm) var(--radius-sm);z-index:1000;margin:0;padding:0;list-style:none;box-shadow:0 4px 6px rgba(0,0,0,.1)}.si-dropdown-wrapper .si-dropdown-slide li{padding:4px;list-style:none;cursor:pointer;transition:background .2s ease}.si-dropdown-wrapper .si-dropdown-slide li:hover{background:rgba(0,0,0,.05)}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide li:hover{background:rgba(255,255,255,.1)}.si-dropdown-wrapper .si-dropdown-slide li a{text-decoration:none;color:#2d2f31;display:block;font-size:var(--fs-sm)}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide li a{color:#e5e5e5}.si-dropdown-wrapper input[type=checkbox]{position:absolute;opacity:0;height:0;width:0;pointer-events:none}.si-dropdown-wrapper input[type=checkbox]:checked+.si-dropdown-label::after{transform:rotateZ(45deg)}.si-dropdown-wrapper input[type=checkbox]:checked~.si-dropdown-slide{height:192px}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-label{background:#1a1a1a}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide{background:#1a1a1a;border:1px solid #404040;box-shadow:0 4px 6px rgba(0,0,0,.3)}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide li a{color:#e5e5e5}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide li a{color:#e5e5e5}[data-theme=dark] .si-dropdown-wrapper .si-dropdown-slide li:hover{background:rgba(255,255,255,.05)}</style>
-</head>
-<body>
-<div class=page-loader id=page-loader>
-<div class=loader>
-<div class=circle></div>
-<div class=circle></div>
-<div class=circle></div>
-<div class=circle></div>
-</div>
-</div>
-<div class="subject-nav subject-nav-desktop" id=subject-nav></div>
-<div class=dev-profiles>
-<div class=profile-stack>
-<div class=profile-item data-tooltip=Imdilshan>
-<a href=https://github.com/Imdilshan target=_blank rel="noopener noreferrer">
-<img src=https://github.com/Imdilshan.png alt=Imdilshan class="profile-img secondary">
-</a>
-</div>
-<div class=profile-item data-tooltip=DevRanbir>
-<a href=https://github.com/DevRanbir target=_blank rel="noopener noreferrer">
-<img src=https://github.com/DevRanbir.png alt=DevRanbir class="profile-img primary">
-</a>
-</div>
-</div>
-</div>
-<header class=header>
-<h1>Estimate your <br> <span style="font-size:1.5em;font-weight:900;font-family:'Lucida Console','Courier New',monospace">SGPA or Internals</span></h1>
-<p>Enter your internals, add projected external marks, and get immediate SGPA estimates with scenarios and export.
-<br><u style=margin-top:4px;display:inline-block>Made for 3rd Sem CSE Gen students of CU</u>
-</p>
-<div class="subject-nav subject-nav-mobile" id=subject-nav-mobile></div>
-</header>
-<main class=container>
-<nav class=tabs>
-<ul class=tab-list role=tablist>
-<li role=presentation>
-<button class=tab role=tab aria-selected=true aria-controls=panel-inputs id=tab-inputs tabindex=0>
-<span class=tab-icon>
-<svg aria-hidden=true xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=none viewBox="0 0 24 24">
-<path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M15 5v14m-8-7h2m0 0h2m-2 0v2m0-2v-2m12 1h-6m6 4h-6M4 19h16c.5523 0 1-.4477 1-1V6c0-.55228-.4477-1-1-1H4c-.55228 0-1 .44772-1 1v12c0 .5523.44772 1 1 1Z"/>
-</svg>
-</span>
-<span class=tab-text>Inputs</span>
-</button>
-</li>
-<li role=presentation>
-<button class=tab role=tab aria-selected=false aria-controls=panel-results id=tab-results tabindex=-1>
-<span class=tab-icon>
-<svg aria-hidden=true xmlns=http://www.w3.org/2000/svg width=18 height=24 fill=none viewBox="0 0 24 24">
-<path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m7.171 12.906-2.153 6.411 2.672-.89 1.568 2.34 1.825-5.183m5.73-2.678 2.154 6.411-2.673-.89-1.568 2.34-1.825-5.183M9.165 4.3c.58.068 1.153-.17 1.515-.628a1.681 1.681 0 0 1 2.64 0 1.68 1.68 0 0 0 1.515.628 1.681 1.681 0 0 1 1.866 1.866c-.068.58.17 1.154.628 1.516a1.681 1.681 0 0 1 0 2.639 1.682 1.682 0 0 0-.628 1.515 1.681 1.681 0 0 1-1.866 1.866 1.681 1.681 0 0 0-1.516.628 1.681 1.681 0 0 1-2.639 0 1.681 1.681 0 0 0-1.515-.628 1.681 1.681 0 0 1-1.867-1.866 1.681 1.681 0 0 0-.627-1.515 1.681 1.681 0 0 1 0-2.64c.458-.361.696-.935.627-1.515A1.681 1.681 0 0 1 9.165 4.3ZM14 9a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
-</svg>
-</span>
-<span class=tab-text>Result</span>
-</button>
-</li>
-<li role=presentation>
-<button class=tab role=tab aria-selected=false aria-controls=panel-help id=tab-help tabindex=-1>
-<span class=tab-icon>
-<svg aria-hidden=true xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=none viewBox="0 0 24 24">
-<path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-</svg>
-</span>
-<span class=tab-text>Help</span>
-</button>
-</li>
-</ul>
-<div class=tab-actions>
-<button class=action-icon-btn onclick=importCSV() aria-label="Import CSV" title="Import CSV">
-<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden=true xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=none viewBox="0 0 24 24">
-<path stroke=currentColor stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
-</svg>
-</button>
-<button class=action-icon-btn onclick=downloadTemplateCSV() aria-label="Download CSV Template" title="Download CSV Template">
-<svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round>
-<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-<polyline points="14 2 14 8 20 8"></polyline>
-<line x1=12 y1=18 x2=12 y2=12></line>
-<line x1=9 y1=15 x2=15 y2=15></line>
-</svg>
-</button>
-<button class=action-icon-btn onclick=downloadExcel() id=excel-download-btn aria-label="Download Excel file" title="Download Excel file (.xlsx)">
-<svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden=true xmlns=http://www.w3.org/2000/svg width=24 height=24 fill=currentColor viewBox="0 0 24 24">
-<path fill-rule=evenodd d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule=evenodd />
-<path fill-rule=evenodd d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule=evenodd />
-</svg>
-</button>
-<button class=action-icon-btn onclick=toggleTheme(event) aria-label="Toggle dark mode" title="Toggle dark mode">
-<svg id=theme-icon-light width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round style=display:none>
-<circle cx=12 cy=12 r=5></circle>
-<line x1=12 y1=1 x2=12 y2=3></line>
-<line x1=12 y1=21 x2=12 y2=23></line>
-<line x1=4.22 y1=4.22 x2=5.64 y2=5.64></line>
-<line x1=18.36 y1=18.36 x2=19.78 y2=19.78></line>
-<line x1=1 y1=12 x2=3 y2=12></line>
-<line x1=21 y1=12 x2=23 y2=12></line>
-<line x1=4.22 y1=19.78 x2=5.64 y2=18.36></line>
-<line x1=18.36 y1=5.64 x2=19.78 y2=4.22></line>
-</svg>
-<svg id=theme-icon-dark width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round>
-<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-</svg>
-</button>
-</div>
-</nav>
-<div id=panel-inputs role=tabpanel aria-labelledby=tab-inputs class=tab-panel>
-<div id=subjects-container></div>
-<div class=action-bar>
-<button onclick=downloadDetailedCSV()>
-<p>Save as CSV</p>
-<svg xmlns=http://www.w3.org/2000/svg class="h-6 w-6" fill=none viewBox="0 0 24 24" stroke=currentColor stroke-width=4>
-<path stroke-linecap=round stroke-linejoin=round d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-</svg>
-</button>
-<button onclick=calculateSGPA()>
-<p>Calculate SGPA</p>
-<svg xmlns=http://www.w3.org/2000/svg class="h-6 w-6" fill=none viewBox="0 0 24 24" stroke=currentColor stroke-width=4>
-<path stroke-linecap=round stroke-linejoin=round d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-</svg>
-</button>
-</div>
-</div>
-<div class=toast-container id=toast-container></div>
-<div id=panel-results role=tabpanel aria-labelledby=tab-results class=tab-panel hidden>
-<div class=results-hero>
-<div class=sgpa-label>Your Estimated SGPA</div>
-<div class=sgpa-display id=sgpa-value>0.00</div>
-<div class=sgpa-grade-badge id=sgpa-grade-badge style=display:none>
-<svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2.5 stroke-linecap=round stroke-linejoin=round>
-<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-</svg>
-<span id=overall-grade>-</span>
-</div>
-<div role=status aria-live=polite class=sr-only id=sgpa-announcement></div>
-</div>
-<div class=results-grid>
-<div class=result-card>
-<div class=result-label>
-<svg width=14 height=14 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round>
-<circle cx=12 cy=12 r=10></circle>
-<polyline points="12 6 12 12 16 14"></polyline>
-</svg>
-Total Credits
-</div>
-<div class=result-value id=total-credits>23</div>
-</div>
-<div class=result-card>
-<div class=result-label>
-<svg width=14 height=14 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round>
-<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-<polyline points="14 2 14 8 20 8"></polyline>
-<line x1=16 y1=13 x2=8 y2=13></line>
-<line x1=16 y1=17 x2=8 y2=17></line>
-</svg>
-Total Marks you earned
-</div>
-<div class=result-value id=total-marks>0</div>
-</div>
-</div>
-<div class=breakdown-section>
-<div class=breakdown-header>
-<h3>
-<svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round>
-<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-</svg>
-Subject-wise Breakdown
-</h3>
-</div>
-<ul class=breakdown-list id=breakdown-list></ul>
-</div>
-<div class=action-bar style=margin-top:var(--space-4);justify-content:center>
-<button onclick=downloadSummaryCSV()>
-<p>Save as CSV</p>
-<svg xmlns=http://www.w3.org/2000/svg class="h-6 w-6" fill=none viewBox="0 0 24 24" stroke=currentColor stroke-width=4>
-<path stroke-linecap=round stroke-linejoin=round d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-</svg>
-</button>
-</div>
-</div>
-<div id=panel-help role=tabpanel aria-labelledby=tab-help class=tab-panel hidden>
-<div class=help-content>
-<div class=help-section id=help-sgpa>
-<h3>
-<svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round style=display:inline-block;vertical-align:middle;margin-right:8px>
-<line x1=18 y1=20 x2=18 y2=10></line>
-<line x1=12 y1=20 x2=12 y2=4></line>
-<line x1=6 y1=20 x2=6 y2=14></line>
-</svg>
-How SGPA is Calculated
-</h3>
-<p>SGPA (Semester Grade Point Average) is calculated using the weighted average of grade points across all courses, where each course's contribution depends on its credit value.</p>
-<div class=formula-box>
-SGPA = Σ(Grade Point × Credits) / Σ(Credits)
-</div>
-<p style=margin-top:var(--space-3);font-size:var(--fs-sm);color:var(--neutral-500);font-style:italic>
-Example: If you score 98% (A+ = 10 GP) in a 4-credit subject and 92% (A = 9 GP) in a 3-credit subject:<br>
-SGPA = (10×4 + 9×3) / (4+3) = 67/7 = 9.57
-</p>
-</div>
-<div class=help-section id=help-grades>
-<h3>
-<svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round style=display:inline-block;vertical-align:middle;margin-right:8px>
-<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-</svg>
-Grade Scale & Grade Points
-</h3>
-<p style=margin-bottom:var(--space-4)>Your percentage marks are converted to letter grades, and each grade has a corresponding <strong>Grade Point (GP)</strong> that is used to calculate your SGPA.</p>
-<div style=display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-3);margin-top:var(--space-4)>
-<div style="background:linear-gradient(135deg,#22c55e 0,#16a34a 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>96-100%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>A+ Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Outstanding • 10 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#3b82f6 0,#2563eb 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>90-95%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>A Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Excellent • 9 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#8b5cf6 0,#7c3aed 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>85-89%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>B+ Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Very Good • 8 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#14b8a6 0,#0d9488 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>60-84%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>B Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Good • 7 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#f59e0b 0,#d97706 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>50-59%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>C+ Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Above Average • 6 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#f97316 0,#ea580c 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>40-49%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>C Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Average • 5 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#6b7280 0,#4b5563 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>35-39%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>D Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Pass • 4 GP</div>
-</div>
-<div style="background:linear-gradient(135deg,#ef4444 0,#dc2626 100%);padding:var(--space-4);border-radius:var(--radius-md);color:#fff">
-<div style=font-size:var(--fs-xs);opacity:.9;margin-bottom:var(--space-1)>0-34%</div>
-<div style=font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--space-1)>E/F Grade</div>
-<div style=font-size:var(--fs-sm);opacity:.95>Fail • 0 GP</div>
-</div>
-</div>
-<div style="margin-top:var(--space-5);padding:var(--space-4);background:var(--color-primary-100);border-left:4px solid var(--color-primary);border-radius:var(--radius-md)">
-<h4 style=margin-bottom:var(--space-2);color:var(--neutral-900);font-size:var(--fs-md)>
-<svg width=18 height=18 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round style=display:inline-block;vertical-align:middle;margin-right:6px>
-<circle cx=12 cy=12 r=10></circle>
-<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-<line x1=12 y1=17 x2=12.01 y2=17></line>
-</svg>
-What are Grade Points?
-</h4>
-<p style=color:var(--neutral-700);font-size:var(--fs-sm);line-height:1.6>
-<strong>Grade Points (GP)</strong> are numerical values assigned to letter grades. They standardize performance across different subjects, making it easy to calculate your overall academic standing. The higher your percentage, the better your grade, and the more grade points you earn. These grade points are multiplied by the subject's credits and averaged to give you your SGPA.
-</p>
-</div>
-</div>
-<div class=help-section id=help-scenarios>
-<h3>
-<svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2 stroke-linecap=round stroke-linejoin=round style=display:inline-block;vertical-align:middle;margin-right:8px>
-<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-</svg>
-Quick Estimation Scenarios
-</h3>
-<p style=margin-bottom:var(--space-4)>Use the scenario buttons (Low/Mid/High) to instantly fill in estimated external exam marks and see how different performance levels affect your SGPA.</p>
-<div style=display:grid;gap:var(--space-3)>
-<div style="display:flex;align-items:start;gap:var(--space-3);padding:var(--space-3);background:var(--neutral-50);border-radius:var(--radius-md);border:1px solid var(--neutral-200)">
-<div style=background:#fee2e2;color:#991b1b;padding:var(--space-2);border-radius:var(--radius-sm);font-weight:700;min-width:60px;text-align:center>Low</div>
-<div style=flex:1>
-<div style=font-weight:600;color:var(--neutral-900);margin-bottom:var(--space-1)>Conservative Estimate</div>
-<div style=font-size:var(--fs-sm);color:var(--neutral-700)>Assumes you'll score <strong>50%</strong> in external exams. Use this for a safe, worst-case scenario to see minimum expected SGPA.</div>
-</div>
-</div>
-<div style="display:flex;align-items:start;gap:var(--space-3);padding:var(--space-3);background:var(--neutral-50);border-radius:var(--radius-md);border:1px solid var(--neutral-200)">
-<div style=background:#fef3c7;color:#92400e;padding:var(--space-2);border-radius:var(--radius-sm);font-weight:700;min-width:60px;text-align:center>Mid</div>
-<div style=flex:1>
-<div style=font-weight:600;color:var(--neutral-900);margin-bottom:var(--space-1)>Realistic Estimate</div>
-<div style=font-size:var(--fs-sm);color:var(--neutral-700)>Assumes you'll score <strong>70%</strong> in external exams. A balanced estimate for average performance in finals.</div>
-</div>
-</div>
-<div style="display:flex;align-items:start;gap:var(--space-3);padding:var(--space-3);background:var(--neutral-50);border-radius:var(--radius-md);border:1px solid var(--neutral-200)">
-<div style=background:#d1fae5;color:#065f46;padding:var(--space-2);border-radius:var(--radius-sm);font-weight:700;min-width:60px;text-align:center>High</div>
-<div style=flex:1>
-<div style=font-weight:600;color:var(--neutral-900);margin-bottom:var(--space-1)>Optimistic Estimate</div>
-<div style=font-size:var(--fs-sm);color:var(--neutral-700)>Assumes you'll score <strong>85%</strong> in external exams. Your target if you're aiming for excellent performance.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-<script>const subjects=[{name:"Universal Human Values, Ethics and Life Skills-2",code:"24UCT-296",credits:2,components:[{name:"Attendance Marks",max:2,obtained:0},{name:"Assignment/PBL",max:18,obtained:0},{name:"Class Activity",max:20,obtained:0}],externals:[{name:"External Theory",max:60,obtained:0}]},{name:"Advanced Data Structures and Algorithms",code:"24CSH-202",credits:4,components:[{name:"Attendance Marks",max:2,obtained:0},{name:"MST-1 Hybrid",max:20,obtained:0},{name:"MST-2 Hybrid",max:20,obtained:0},{name:"Experiment 1(CSE)",max:30,obtained:0},{name:"Experiment 2(CSE)",max:30,obtained:0},{name:"Experiment 3(CSE)",max:30,obtained:0},{name:"Experiment 4(CSE)",max:30,obtained:0},{name:"Class Performance(CSE)",max:10,obtained:0},{name:"Assignment/PBL",max:10,obtained:0},{name:"Quiz",max:4,obtained:0},{name:"Surprise Test(CSE)",max:12,obtained:0},{name:"Course Project",max:5,obtained:0},{name:"Industry Aligned Assessment(Hybrid)",max:10,obtained:0}],externals:[{name:"End Term Assessment TH(CSE)",max:60,obtained:0},{name:"End Term Assessment Pr(CSE)",max:40,obtained:0}]},{name:"Database Management System",code:"24CSH-204",credits:4,components:[{name:"Attendance Marks",max:2,obtained:0},{name:"MST-1 Hybrid",max:20,obtained:0},{name:"MST-2 Hybrid",max:20,obtained:0},{name:"Experiment 1(CSE)",max:30,obtained:0},{name:"Experiment 2(CSE)",max:30,obtained:0},{name:"Experiment 3(CSE)",max:30,obtained:0},{name:"Experiment 4(CSE)",max:30,obtained:0},{name:"Class Performance(CSE)",max:10,obtained:0},{name:"Assignment/PBL",max:10,obtained:0},{name:"Quiz",max:4,obtained:0},{name:"Surprise Test(CSE)",max:12,obtained:0},{name:"Course Project",max:5,obtained:0},{name:"Industry Aligned Assessment(Hybrid)",max:10,obtained:0}],externals:[{name:"End Term Assessment TH(CSE)",max:60,obtained:0},{name:"End Term Assessment Pr(CSE)",max:40,obtained:0}]},{name:"Python Programming",code:"24CSP-203",credits:2,components:[{name:"Class Performance",max:10,obtained:0},{name:"Experiment 1",max:30,obtained:0},{name:"Experiment 2",max:30,obtained:0},{name:"Experiment 3",max:30,obtained:0},{name:"Experiment 4",max:30,obtained:0},{name:"Mini Project",max:5,obtained:0},{name:"Industry Aligned Assessment",max:10,obtained:0}],externals:[{name:"External Viva / Voce",max:40,obtained:0}]},{name:"Computer Organization and Architecture",code:"24CST-201",credits:3,components:[{name:"Attendance Marks",max:2,obtained:0},{name:"Assignment/PBL",max:10,obtained:0},{name:"Mid-Semester Test-1",max:20,obtained:0},{name:"Quiz",max:4,obtained:0},{name:"Surprise Test",max:12,obtained:0},{name:"Mid-Semester Test-2",max:20,obtained:0}],externals:[{name:"External Theory",max:60,obtained:0}]},{name:"Discrete Mathematics",code:"24SMT-242",credits:4,components:[{name:"Attendance Marks",max:2,obtained:0},{name:"Assignment/PBL",max:10,obtained:0},{name:"Mid-Semester Test-1",max:20,obtained:0},{name:"Quiz",max:4,obtained:0},{name:"Surprise Test",max:12,obtained:0},{name:"Mid-Semester Test-2",max:20,obtained:0}],externals:[{name:"External Theory",max:60,obtained:0}]},{name:"Soft Skills-1",code:"24TDP-211",credits:1,components:[{name:"Attendance and Engagement Score",max:4,obtained:0},{name:"Write X (Soft Skills)",max:10,obtained:0},{name:"LIVE Assignment (Soft Skills)",max:30,obtained:0},{name:"Presentation (Soft Skills)",max:10,obtained:0},{name:"Quiz (Soft Skills)",max:6,obtained:0}],externals:[{name:"External Viva / Voce",max:40,obtained:0}]},{name:"Four G P",code:"24GP-101",credits:1,components:[{name:"Completion",max:10,obtained:0,isGradeInput:!0}],externals:[]},{name:"Social Internship",code:"24SI-101",credits:2,components:[{name:"Grade",max:10,obtained:0,isGradeInput:!0}],externals:[]}];function getGrade(e){return e>=96?{grade:"A+",point:10}:e>=90?{grade:"A",point:9}:e>=85?{grade:"B+",point:8}:e>=60?{grade:"B",point:7}:e>=50?{grade:"C+",point:6}:e>=40?{grade:"C",point:5}:e>=35?{grade:"D",point:4}:{grade:"E/F",point:0}}function showToast(e,t,n){const a=document.getElementById("toast-container"),o=document.createElement("div");o.className=`toast ${e}`;const s="success"===e?'<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">\n                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>\n                   </svg>':"error"===e?'<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">\n                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>\n                   </svg>':'<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">\n                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>\n                   </svg>';o.innerHTML=`\n                ${s}\n                <div class="toast-content">\n                    <div class="toast-title">${t}</div>\n                    <div class="toast-message">${n}</div>\n                </div>\n                <button class="toast-close" onclick="this.parentElement.remove()">\n                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">\n                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>\n                    </svg>\n                </button>\n            `,a.appendChild(o),setTimeout((()=>{o.classList.add("removing"),setTimeout((()=>o.remove()),300)}),5e3)}function renderSubjects(){document.getElementById("subjects-container").innerHTML=subjects.map(((e,t)=>`\n                <div class="subject-card" id="subject-${t}" data-subject-idx="${t}">\n                    <div class="subject-header">\n                        <div>\n                            <div class="subject-name">${e.name}</div>\n                            <div class="subject-meta">\n                                <span>${e.code}</span>\n                                <span>•</span>\n                                <span>${e.credits} Credits</span>\n                            </div>\n                        </div>\n                        <span class="badge">${e.credits} CR</span>\n                    </div>\n\n                    <div class="components-grid">\n                        ${e.components.map(((e,n)=>e.isGradeInput?`\n                                    <div class="component-row">\n                                        <div class="component-name">${e.name}</div>\n                                        <div class="si-dropdown-wrapper">\n                                            <input type="checkbox" id="si-dropdown-touch-${t}-${n}">\n                                            <label for="si-dropdown-touch-${t}-${n}" class="si-dropdown-label">\n                                                <span id="si-selected-text-${t}-${n}">Select Grade</span>\n                                            </label>\n                                            <ul class="si-dropdown-slide">\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 10, 'A+ (96-100)'); return false;">A+ (96-100)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 9, 'A (90-95)'); return false;">A (90-95)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 8, 'B+ (85-89)'); return false;">B+ (85-89)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 7, 'B (60-84)'); return false;">B (60-84)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 6, 'C+ (50-59)'); return false;">C+ (50-59)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 5, 'C (40-49)'); return false;">C (40-49)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 4, 'D (35-39)'); return false;">D (35-39)</a></li>\n                                                <li><a href="#" onclick="selectGrade(${t}, ${n}, 0, 'E/F (0-34)'); return false;">E/F (0-34)</a></li>\n                                            </ul>\n                                            <input type="hidden" id="marks-${t}-${n}" value="" data-subject-idx="${t}" data-comp-idx="${n}" data-max="${e.max}" data-is-grade-input="true">\n                                        </div>\n                                    </div>\n                                `:e.isSwitch||e.name.toLowerCase().includes("attendance")?`\n                                    <div class="component-row">\n                                        <div class="component-name">${e.name}</div>\n                                        <div class="checkbox-wrapper-63">\n                                            <label class="switch">\n                                                <input \n                                                    type="checkbox" \n                                                    id="marks-${t}-${n}"\n                                                    data-subject-idx="${t}"\n                                                    data-comp-idx="${n}"\n                                                    data-max="${e.max}"\n                                                    ${e.isSwitch?'data-is-gp-switch="true"':""}\n                                                    aria-label="${e.name} - toggle for full marks"\n                                                >\n                                                <span class="slider"></span>\n                                            </label>\n                                        </div>\n                                        <div class="component-max">${e.isSwitch?"":"/ "+e.max}</div>\n                                    </div>\n                                `:`\n                                    <div class="component-row">\n                                        <div class="component-name">${e.name}</div>\n                                        <input \n                                            type="number" \n                                            id="marks-${t}-${n}"\n                                            data-subject-idx="${t}"\n                                            data-comp-idx="${n}"\n                                            data-max="${e.max}"\n                                            min="0"\n                                            step="0.5"\n                                            placeholder="0"\n                                            aria-label="${e.name} marks out of ${e.max}"\n                                        >\n                                        <div class="component-max">/ ${e.max}</div>\n                                    </div>\n                                `)).join("")}\n                    </div>\n\n                    ${e.externals&&e.externals.length>0?`\n                        <div class="external-section">\n                            <div class="external-header">\n                                <div class="external-title">\n                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 6px;">\n                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>\n                                        <polyline points="14 2 14 8 20 8"></polyline>\n                                        <line x1="16" y1="13" x2="8" y2="13"></line>\n                                        <line x1="16" y1="17" x2="8" y2="17"></line>\n                                        <polyline points="10 9 9 9 8 9"></polyline>\n                                    </svg>\n                                    External Exams (Estimate)\n                                </div>\n                                <div class="scenario-buttons">\n                                    <button class="btn-scenario" onclick="applyScenario(${t}, 'low')" aria-label="Apply low estimate">\n                                        <span class="desktop-text">Low (50%)</span>\n                                        <span class="mobile-text">Low</span>\n                                    </button>\n                                    <button class="btn-scenario" onclick="applyScenario(${t}, 'mid')" aria-label="Apply mid estimate">\n                                        <span class="desktop-text">Mid (70%)</span>\n                                        <span class="mobile-text">Mid</span>\n                                    </button>\n                                    <button class="btn-scenario" onclick="applyScenario(${t}, 'high')" aria-label="Apply high estimate">\n                                        <span class="desktop-text">High (85%)</span>\n                                        <span class="mobile-text">High</span>\n                                    </button>\n                                </div>\n                            </div>\n                            <div class="external-inputs">\n                                ${e.externals.map(((e,n)=>`\n                                    <div class="component-row">\n                                        <div class="component-name">${e.name}</div>\n                                        <input \n                                            type="number" \n                                            id="ext-${t}-${n}"\n                                            data-subject-idx="${t}"\n                                            data-ext-idx="${n}"\n                                            data-max="${e.max}"\n                                            data-is-external="true"\n                                            min="0"\n                                            step="0.5"\n                                            placeholder="Estimate (0-${e.max})"\n                                            aria-label="${e.name} marks out of ${e.max}"\n                                        >\n                                        <div class="component-max">/ ${e.max}</div>\n                                    </div>\n                                `)).join("")}\n                            </div>\n                        </div>\n                    `:""}\n\n                    <div class="subject-summary">\n                        <table class="summary-table">\n                            <thead>\n                                <tr>\n                                    ${e.isGP||e.isGradeInput?"\n                                        <th>Status</th>\n                                    ":`\n                                        <th>Internal Total</th>\n                                        ${e.externals&&e.externals.length>0?"\n                                            <th>External Total</th>\n                                            <th>Combined Total</th>\n                                        ":""}\n                                    `}\n                                    <th>Grade</th>\n                                </tr>\n                            </thead>\n                            <tbody>\n                                <tr>\n                                    ${e.isGP?`\n                                        <td id="internal-${t}">Not Done</td>\n                                    `:e.isGradeInput?`\n                                        <td id="internal-${t}">Not Selected</td>\n                                    `:`\n                                        <td id="internal-${t}">0 / ${e.components.reduce(((e,t)=>e+t.max),0)}</td>\n                                        ${e.externals&&e.externals.length>0?`\n                                            <td id="external-${t}">0 / ${e.externals.reduce(((e,t)=>e+t.max),0)}</td>\n                                            <td id="combined-${t}">0 / ${e.components.reduce(((e,t)=>e+t.max),0)+e.externals.reduce(((e,t)=>e+t.max),0)}</td>\n                                        `:""}\n                                    `}\n                                    <td class="grade-cell"><span class="grade-pill" id="grade-${t}">-</span></td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            `)).join(""),setTimeout((()=>{subjects.forEach(((e,t)=>{e.components.forEach(((e,n)=>{const a=document.getElementById(`marks-${t}-${n}`);a&&("checkbox"===a.type||"SELECT"===a.tagName?a.addEventListener("change",(function(){updateSubjectTotal(t)})):(a.addEventListener("input",(function(){validateInput(this),updateSubjectTotal(t)})),a.addEventListener("keydown",(function(a){handleInputKeydown(a,t,n,e.max,!1)}))))})),e.externals&&e.externals.forEach(((e,n)=>{const a=document.getElementById(`ext-${t}-${n}`);a&&(a.addEventListener("input",(function(){validateInput(this),updateSubjectTotal(t)})),a.addEventListener("keydown",(function(a){handleInputKeydown(a,t,n,e.max,!0)})))}))}))}),100),renderSubjectNav()}function selectGrade(e,t,n,a){document.getElementById(`marks-${e}-${t}`).value=n;document.getElementById(`si-selected-text-${e}-${t}`).textContent=a;document.getElementById(`si-dropdown-touch-${e}-${t}`).checked=!1,updateSubjectTotal(e)}function applyScenario(e,t){const n=subjects[e];if(!n.externals)return;const a={low:.5,mid:.7,high:.85}[t];n.externals.forEach(((t,n)=>{const o=document.getElementById(`ext-${e}-${n}`),s=Math.round(t.max*a*2)/2;o.value=s})),updateSubjectTotal(e)}function updateSubjectTotal(e){const t=subjects[e],n="24GP-101"===t.code,a="24SI-101"===t.code;if(n||a){const n=document.getElementById(`marks-${e}-0`),a=parseFloat(n.value)||0;let o=0;o=10===a?98:9===a?92.5:8===a?87:7===a?72:6===a?54.5:5===a?44.5:4===a?37:0;const{grade:s,point:r}=getGrade(o);document.getElementById(`internal-${e}`).textContent=s||"Not Selected";const i=document.getElementById(`grade-${e}`);return window.innerWidth<=768?i.textContent=s:i.textContent=`${s} (${r} GP)`,i.className=`grade-pill grade-${s.toLowerCase().replace(/\//g,"-")}`,t.percentage=o,t.gradePoint=r,void updateNavButtonStatus(e)}const o="24CSH-202"===t.code||"24CSH-204"===t.code,s="24CSP-203"===t.code,r="24TDP-211"===t.code||"24UCT-296"===t.code,i=!o&&!s&&!r&&t.externals&&t.externals[0].name.includes("External Theory");let c=0,d=0,l=0,m=0;const u=t=>{const n=document.getElementById(`marks-${e}-${t}`);if("checkbox"===n.type){const e=parseFloat(n.getAttribute("data-max"));return n.checked?e:0}return parseFloat(n.value)||0},p=t=>parseFloat(document.getElementById(`ext-${e}-${t}`).value)||0;if(o){const n=u(0),a=u(1),o=u(2),s=u(3),r=u(4),i=u(5),x=u(6),h=u(7),b=u(8),g=u(9),v=u(10),$=u(11),y=u(12);if(c=b+(a+o)/2+(v+g)/2+y+n+((s+r+i+x)/3+h/2+$+y),d=110,t.externals){const e=p(0),t=p(1);l=e/60*50+t,m=90}const f=(c+l)/2,E=(d+m)/2,k=f/E*100,{grade:S,point:w}=getGrade(k);document.getElementById(`internal-${e}`).textContent=`${c.toFixed(1)} / ${d}`,t.externals&&(document.getElementById(`external-${e}`).textContent=`${l.toFixed(1)} / ${m}`,document.getElementById(`combined-${e}`).textContent=`${f.toFixed(1)} / ${E}`);const C=document.getElementById(`grade-${e}`);window.innerWidth<=768?C.textContent=S:C.textContent=`${S} (${w} GP)`,updateNavButtonStatus(e)}else if(s){const n=u(0),a=u(1),o=u(2),s=u(3),r=u(4),i=u(5),x=u(6);c=40*((a+o+s+r)/4)/30+n/2+i+x,d=60,t.externals&&(l=p(0),m=40);const h=c+l,b=d+m,g=h/b*100,{grade:v,point:$}=getGrade(g);document.getElementById(`internal-${e}`).textContent=`${c.toFixed(1)} / ${d}`,t.externals&&(document.getElementById(`external-${e}`).textContent=`${l.toFixed(1)} / ${m}`,document.getElementById(`combined-${e}`).textContent=`${h.toFixed(1)} / ${b}`);const y=document.getElementById(`grade-${e}`);window.innerWidth<=768?y.textContent=v:y.textContent=`${v} (${$} GP)`,updateNavButtonStatus(e)}else if(i){const n=u(0),a=u(1),o=u(2),s=u(3),r=u(4),i=u(5);c=a+(o+i)/2+r/2+s/2+n,d=40,t.externals&&(l=p(0),m=60);const x=c+l,h=d+m,b=x/h*100,{grade:g,point:v}=getGrade(b);document.getElementById(`internal-${e}`).textContent=`${c.toFixed(1)} / ${d}`,t.externals&&(document.getElementById(`external-${e}`).textContent=`${l.toFixed(1)} / ${m}`,document.getElementById(`combined-${e}`).textContent=`${x.toFixed(1)} / ${h}`);const $=document.getElementById(`grade-${e}`);window.innerWidth<=768?$.textContent=g:$.textContent=`${g} (${v} GP)`,updateNavButtonStatus(e)}else{t.components.forEach(((e,t)=>{c+=u(t),d+=e.max})),t.externals&&t.externals.forEach(((e,t)=>{l+=p(t),m+=e.max}));const n=c+l,a=d+m,o=n/a*100,{grade:s,point:r}=getGrade(o);document.getElementById(`internal-${e}`).textContent=`${c.toFixed(1)} / ${d}`,t.externals&&(document.getElementById(`external-${e}`).textContent=`${l.toFixed(1)} / ${m}`,document.getElementById(`combined-${e}`).textContent=`${n.toFixed(1)} / ${a}`);const i=document.getElementById(`grade-${e}`);window.innerWidth<=768?i.textContent=s:i.textContent=`${s} (${r} GP)`,updateNavButtonStatus(e)}}function updateNavButtonStatus(e){const t=document.querySelectorAll(`.subject-nav-btn[data-subject-idx="${e}"]`),n=subjects[e],a="24GP-101"===n.code,o="24SI-101"===n.code;if(a||o){const n=parseFloat(document.getElementById(`marks-${e}-0`)?.value)>0,a='<svg class="nav-big-tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';return void t.forEach((e=>{const t=e.querySelector(".nav-tick"),o=e.querySelector(".nav-big-tick"),s=e.querySelector(".nav-number");t&&t.remove(),o&&o.remove(),n?(e.classList.add("complete","full-complete"),s&&(s.style.display="none"),e.insertAdjacentHTML("beforeend",a)):(e.classList.remove("complete","full-complete"),s&&(s.style.display=""))}))}const s=isSubjectInternalComplete(e),r=isSubjectExternalComplete(e);t.forEach((e=>{const t=e.querySelector(".nav-tick"),n=e.querySelector(".nav-big-tick"),a=e.querySelector(".nav-number");t&&t.remove(),n&&n.remove(),s&&r?(e.classList.add("complete","full-complete"),a&&(a.style.display="none"),e.insertAdjacentHTML("beforeend",'<svg class="nav-big-tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>')):s?(e.classList.add("complete"),e.classList.remove("full-complete"),a&&(a.style.display=""),e.insertAdjacentHTML("beforeend",'<svg class="nav-tick" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>')):(e.classList.remove("complete","full-complete"),a&&(a.style.display=""))}))}function isSubjectExternalComplete(e){const t=subjects[e].externals||[];if(0===t.length)return!1;for(let n=0;n<t.length;n++){const t=document.getElementById(`ext-${e}-${n}`);if(!t||""===t.value||null===t.value)return!1}return!0}function calculateSGPA(){let e=!1,t=!1;if(subjects.forEach(((n,a)=>{const o="24GP-101"===n.code,s="24SI-101"===n.code;if(o||s){const t=document.getElementById(`marks-${a}-0`);t&&parseFloat(t.value)>0&&(e=!0)}else n.components.forEach(((n,o)=>{const s=document.getElementById(`marks-${a}-${o}`);if("checkbox"===s.type)s.checked&&(e=!0);else{""!==s.value.trim()?e=!0:t=!0}}))})),!e)return void showToast("error","No Marks Entered","Please enter at least some marks before calculating SGPA.");if(t)return void showToast("warning","Incomplete Data","Some internal marks are missing. Please fill all internal fields.");let n=0,a=0,o=0;const s=[];subjects.forEach(((e,t)=>{const r="24GP-101"===e.code,i="24SI-101"===e.code;if(r||i)return void(void 0!==e.percentage&&void 0!==e.gradePoint&&(n+=e.credits,a+=e.credits*e.gradePoint,s.push({name:e.name,code:e.code,credits:e.credits,percentage:e.percentage,grade:getGrade(e.percentage).grade,gradePoint:e.gradePoint})));const c="24CSH-202"===e.code||"24CSH-204"===e.code,d="24CSP-203"===e.code,l="24TDP-211"===e.code||"24UCT-296"===e.code,m=!c&&!d&&!l&&e.externals&&e.externals[0].name.includes("External Theory"),u=e=>{const n=document.getElementById(`marks-${t}-${e}`);if("checkbox"===n.type){const e=parseFloat(n.getAttribute("data-max"));return n.checked?e:0}if("SELECT"===n.tagName){const e=parseFloat(n.value)||0;return 10===e?98:9===e?92.5:8===e?87:7===e?72:6===e?54.5:5===e?44.5:4===e?37:0}return parseFloat(n.value)||0},p=e=>parseFloat(document.getElementById(`ext-${t}-${e}`).value)||0;let x=0,h=0,b=0,g=0;if(c){const t=u(0),n=u(1),a=u(2),o=u(3),s=u(4),r=u(5),i=u(6),c=u(7),d=u(8),l=u(9),m=u(10),v=u(11),$=u(12);if(x=d+(n+a)/2+(m+l)/2+$+t+((o+s+r+i)/3+c/2+v+$),e.externals){const e=p(0),t=p(1);h=e/60*50+t}b=(x+h)/2,g=100}else if(d){const t=u(0),n=u(1),a=u(2),o=u(3),s=u(4),r=u(5),i=u(6);x=40*((n+a+o+s)/4)/30+t/2+r+i,e.externals&&(h=p(0)),b=x+h,g=100}else if(m){const t=u(0),n=u(1),a=u(2),o=u(3),s=u(4),r=u(5);x=n+(a+r)/2+s/2+o/2+t,e.externals&&(h=p(0)),b=x+h,g=100}else{e.components.forEach(((e,t)=>{x+=u(t)})),e.externals&&e.externals.forEach(((e,t)=>{h+=p(t)})),b=x+h;g=e.components.reduce(((e,t)=>e+t.max),0)+(e.externals?e.externals.reduce(((e,t)=>e+t.max),0):0)}const v=b/g*100,{grade:$,point:y}=getGrade(v);n+=e.credits,a+=y*e.credits,o+=b,s.push({name:e.name,code:e.code,grade:$,point:y,credits:e.credits,contribution:y*e.credits})}));const r=a/n,i=getGrade(r/10*100);document.getElementById("sgpa-value").textContent=r.toFixed(2),document.getElementById("total-credits").textContent=n,document.getElementById("total-marks").textContent=o.toFixed(1);const c=document.getElementById("sgpa-grade-badge");document.getElementById("overall-grade").textContent=`${i.grade} Grade (${i.point} GP)`,c.style.display="inline-flex",document.getElementById("sgpa-announcement").textContent=`SGPA updated: ${r.toFixed(2)}`;document.getElementById("breakdown-list").innerHTML=s.map(((e,t)=>`\n                <li class="breakdown-item">\n                    <div class="breakdown-icon">${t+1}</div>\n                    <div class="breakdown-info">\n                        <div class="breakdown-course">${e.name}</div>\n                        <div class="breakdown-code">${e.code}</div>\n                    </div>\n                    <div class="breakdown-stats">\n                        <div class="breakdown-grade">${e.grade} • ${e.point} GP</div>\n                        <div class="breakdown-calc">${e.credits} CR × ${e.point} GP = ${e.contribution}</div>\n                    </div>\n                </li>\n            `)).join("");document.getElementById("tab-results").classList.add("show-tab"),activateTab(document.getElementById("tab-results")),setTimeout((()=>{const e=document.getElementById("panel-results");e&&e.scrollIntoView({behavior:"smooth",block:"start"})}),100),setTimeout((()=>{if(r>=8){const n=200,a={origin:{y:.7}};function e(e,t){confetti({...a,...t,particleCount:Math.floor(n*e)})}e(.25,{spread:26,startVelocity:55}),e(.2,{spread:60}),e(.35,{spread:100,decay:.91,scalar:.8}),e(.1,{spread:120,startVelocity:25,decay:.92,scalar:1.2}),e(.1,{spread:120,startVelocity:45})}else if(r>=7.5){const o=2,s={spread:360,ticks:60,gravity:0,decay:.96,startVelocity:20,shapes:[confetti.shapeFromText({text:"👍",scalar:o})],scalar:o};function t(){confetti({...s,particleCount:30}),confetti({...s,particleCount:5,flat:!0})}setTimeout(t,0),setTimeout(t,100),setTimeout(t,200)}}),500),showToast("success","SGPA Calculated!",`Your estimated SGPA is ${r.toFixed(2)} with grade ${i.grade}`)}function downloadDetailedCSV(){const e=[["Course Code","Course Name","Credits","Component","Max Marks","Obtained Marks"]];subjects.forEach(((t,n)=>{t.components.forEach(((a,o)=>{const s=((e,t)=>{const n=document.getElementById(`marks-${e}-${t}`);if(!n)return 0;if("checkbox"===n.type)return n.checked&&parseFloat(n.dataset.max)||0;if("SELECT"===n.tagName){const e=parseFloat(n.value)||0;return 10===e?98:9===e?92.5:8===e?87:7===e?72:6===e?54.5:5===e?44.5:4===e?37:0}return parseFloat(n.value)||0})(n,o);e.push([t.code,t.name,t.credits,a.name,a.max,s||""])})),t.externals&&t.externals.forEach(((a,o)=>{const s=((e,t)=>{const n=document.getElementById(`ext-${e}-${t}`);return n&&parseFloat(n.value)||0})(n,o);e.push([t.code,t.name,t.credits,a.name,a.max,s||""])}))}));const t=e.map((e=>e.map((e=>`"${String(e).replace(/"/g,'""')}"`)).join(","))).join("\n"),n=new Blob([t],{type:"text/csv"}),a=URL.createObjectURL(n),o=document.createElement("a");o.href=a,o.download="sgpa_marks_detailed.csv",o.click(),URL.revokeObjectURL(a),showToast("success","Detailed Marks Exported!","Downloaded: sgpa_marks_detailed.csv")}function downloadSummaryCSV(){const e=[["Course Code","Course Name","Credits","Internal","External","Total","Grade","GP"]],t=(e,t)=>{const n=document.getElementById(`marks-${e}-${t}`);if(!n)return 0;if("checkbox"===n.type)return n.checked&&parseFloat(n.dataset.max)||0;if("SELECT"===n.tagName){const e=parseFloat(n.value)||0;return 10===e?98:9===e?92.5:8===e?87:7===e?72:6===e?54.5:5===e?44.5:4===e?37:0}return parseFloat(n.value)||0},n=(e,t)=>{const n=document.getElementById(`ext-${e}-${t}`);return n&&parseFloat(n.value)||0};let a=0,o=0,s=0,r=0;subjects.forEach(((i,c)=>{let d=0,l=0,m=0,u=0;i.components.forEach(((e,n)=>{const a=t(c,n);d+=a,l+=e.max})),i.externals&&i.externals.forEach(((e,t)=>{const a=n(c,t);m+=a,u+=e.max}));const p=d+m,x=l+u,h=x>0?p/x*100:0,{grade:b,point:g}=getGrade(h);a+=i.credits,o+=p,s+=g,r+=i.credits*g,e.push([i.code,i.name,i.credits,`${d.toFixed(1)}/${l}`,`${m.toFixed(1)}/${u}`,`${p.toFixed(1)}/${x}`,b,g])}));const i=a>0?r/a:0,c=getGrade(i/10*100);e.push([]),e.push(["SGPA SUMMARY"]),e.push(["Your Estimated SGPA",i.toFixed(2)]),e.push(["Grade",`${c.grade} Grade (${c.point} GP)`]),e.push(["Total Credits",a]),e.push(["Total Marks you earned",o.toFixed(1)]),e.push([]),e.push(["Subject-wise Breakdown"]),subjects.forEach(((a,o)=>{let s=0,r=0,i=0,c=0;a.components.forEach(((e,n)=>{const a=t(o,n);s+=a,r+=e.max})),a.externals&&a.externals.forEach(((e,t)=>{const a=n(o,t);i+=a,c+=e.max}));const d=r+c,l=d>0?(s+i)/d*100:0,{grade:m,point:u}=getGrade(l);e.push([o+1,a.name,a.code,`${m} • ${u} GP`,`${a.credits} CR × ${u} GP = ${a.credits*u}`])}));const d=e.map((e=>e.map((e=>`"${String(e).replace(/"/g,'""')}"`)).join(","))).join("\n"),l=new Blob([d],{type:"text/csv"}),m=URL.createObjectURL(l),u=document.createElement("a");u.href=m,u.download="sgpa_summary.csv",u.click(),URL.revokeObjectURL(m),showToast("success","Summary Exported!","Downloaded: sgpa_summary.csv")}async function downloadExcel(){try{if("undefined"==typeof XLSX){const e=document.createElement("script");e.src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js",document.head.appendChild(e),await new Promise(((t,n)=>{e.onload=t,e.onerror=n}))}const e=(e,t)=>{const n=document.getElementById(`marks-${e}-${t}`);if(!n)return 0;if("checkbox"===n.type)return n.checked&&parseFloat(n.dataset.max)||0;if("SELECT"===n.tagName){const e=parseFloat(n.value)||0;return 10===e?98:9===e?92.5:8===e?87:7===e?72:6===e?54.5:5===e?44.5:4===e?37:0}return parseFloat(n.value)||0},t=(e,t)=>{const n=document.getElementById(`ext-${e}-${t}`);return n&&parseFloat(n.value)||0},n=["Course Code","Course Name","Credits","Internal","External","Total","Grade","GP"],a=[];let o=0,s=0,r=0,i=0;subjects.forEach(((n,c)=>{let d=0,l=0,m=0,u=0;n.components.forEach(((t,n)=>{const a=e(c,n);d+=a,l+=t.max})),n.externals&&n.externals.forEach(((e,n)=>{const a=t(c,n);m+=a,u+=e.max}));const p=d+m,x=l+u,h=x>0?p/x*100:0,{grade:b,point:g}=getGrade(h);o+=n.credits,s+=p,r+=g,i+=n.credits*g,a.push([n.code,n.name,n.credits,`${d.toFixed(1)}/${l}`,`${m.toFixed(1)}/${u}`,`${p.toFixed(1)}/${x}`,b,g])}));const c=o>0?i/o:0,d=getGrade(c/10*100);a.push([]),a.push(["SGPA SUMMARY"]),a.push(["Your Estimated SGPA",c.toFixed(2)]),a.push([`${d.grade} Grade (${d.point} GP)`]),a.push(["SGPA updated:",c.toFixed(2)]),a.push(["Total Credits",o]),a.push(["Total Marks",s.toFixed(1)]),a.push([]),a.push(["Subject-wise Breakdown"]),subjects.forEach(((n,o)=>{let s=0,r=0,i=0,c=0;n.components.forEach(((t,n)=>{const a=e(o,n);s+=a,r+=t.max})),n.externals&&n.externals.forEach(((e,n)=>{const a=t(o,n);i+=a,c+=e.max}));const d=r+c,l=d>0?(s+i)/d*100:0,{grade:m,point:u}=getGrade(l);a.push([o+1,n.name,n.code,`${m} • ${u} GP`,`${n.credits} CR × ${u} GP = ${n.credits*u}`])}));const l=["Course Code","Course Name","Credits","Component","Max Marks","Obtained Marks"],m=[];subjects.forEach(((n,a)=>{n.components.forEach(((t,o)=>{const s=e(a,o);m.push([n.code,n.name,n.credits,t.name,t.max,s||""])})),n.externals&&n.externals.forEach(((e,o)=>{const s=t(a,o);m.push([n.code,n.name,n.credits,e.name,e.max,s||""])}))}));const u=XLSX.utils.book_new(),p=XLSX.utils.aoa_to_sheet([n,...a]);XLSX.utils.book_append_sheet(u,p,"Summary");const x=XLSX.utils.aoa_to_sheet([l,...m]);XLSX.utils.book_append_sheet(u,x,"Detailed Marks"),XLSX.writeFile(u,"sgpa_calculation.xlsx"),showToast("success","Excel Exported!","Downloaded: sgpa_calculation.xlsx with 2 sheets")}catch(e){console.error("Excel export error:",e),showToast("error","Export Failed","Could not generate Excel file")}}function downloadTemplateCSV(){const e=[["Course Code","Course Name","Credits","Component","Max Marks","Obtained Marks"]];subjects.forEach((t=>{t.components.forEach((n=>{e.push([t.code,t.name,t.credits,n.name,n.max,""])})),t.externals&&t.externals.forEach((n=>{e.push([t.code,t.name,t.credits,n.name,n.max,""])}))}));const t=e.map((e=>e.map((e=>`"${String(e).replace(/"/g,'""')}"`)).join(","))).join("\n"),n=new Blob([t],{type:"text/csv"}),a=URL.createObjectURL(n),o=document.createElement("a");o.href=a,o.download="sgpa_template.csv",o.click(),URL.revokeObjectURL(a),showToast("success","Template Downloaded!","Fill in the obtained marks and import it back.")}function importCSV(){const e=document.createElement("input");e.type="file",e.accept=".csv",e.onchange=e=>{const t=e.target.files[0];if(!t)return;const n=new FileReader;n.onload=e=>{try{const t=e.target.result.split("\n").map((e=>{const t=e.match(/("([^"]|"")*"|[^,]+)/g);return t?t.map((e=>e.replace(/^"|"$/g,"").replace(/""/g,'"').trim())):[]}));let n=0;for(let e=1;e<t.length;e++){const[a,o,s,r,i,c]=t[e];if(!a||!r||void 0===c||""===c)continue;const d=subjects.findIndex((e=>e.code.trim()===a.trim()));if(-1===d){console.log(`Subject not found for code: ${a}`);continue}const l=subjects[d];let m=l.components.findIndex((e=>e.name.toLowerCase().trim()===r.toLowerCase().trim()));if(-1===m&&(m=l.components.findIndex((e=>e.name.toLowerCase().includes(r.toLowerCase().trim())||r.toLowerCase().includes(e.name.toLowerCase().trim())))),-1!==m){const e=document.getElementById(`marks-${d}-${m}`);e?("checkbox"===e.type?e.checked=parseFloat(c)>0:e.value=parseFloat(c)||0,n++):console.log(`Input not found: marks-${d}-${m}`)}else console.log(`Component not found: ${r} in subject ${l.name}`);if(l.externals){let e=l.externals.findIndex((e=>e.name.toLowerCase().trim()===r.toLowerCase().trim()));if(-1===e&&(e=l.externals.findIndex((e=>e.name.toLowerCase().includes(r.toLowerCase().trim())||r.toLowerCase().includes(e.name.toLowerCase().trim())))),-1!==e){const t=document.getElementById(`ext-${d}-${e}`);t?(t.value=parseFloat(c)||0,n++):console.log(`External input not found: ext-${d}-${e}`)}}}subjects.forEach(((e,t)=>updateSubjectTotal(t))),n>0?showToast("success","CSV Imported!",`Successfully imported ${n} value(s).`):showToast("warning","Import Warning","No valid marks were found in the CSV file. Please check the format and component names.")}catch(e){console.error("Import error:",e),showToast("error","Import Failed","Unable to parse the CSV file. Please check the format.")}},n.readAsText(t)},e.click()}function activateTab(e){e.closest('[role="tablist"]').querySelectorAll('[role="tab"]').forEach((t=>{t.setAttribute("aria-selected",t===e?"true":"false"),t.tabIndex=t===e?0:-1}));document.querySelectorAll('[role="tabpanel"]').forEach((t=>{t.hidden=t.id!==e.getAttribute("aria-controls")}));const t=document.getElementById("subject-nav"),n=document.getElementById("subject-nav-mobile"),a=e.getAttribute("aria-controls"),o=document.querySelectorAll(".action-icon-btn:not(:last-child):not(#excel-download-btn)"),s=document.getElementById("excel-download-btn"),r="panel-inputs"===a,i="panel-results"===a;o.forEach((e=>{e.style.display=r?"flex":"none"})),s&&(s.style.display=i?"flex":"none"),"panel-inputs"===a?(t.style.display="flex",n.style.display="flex",renderSubjectNav()):"panel-help"===a?(t.style.display="flex",n.style.display="none",renderHelpNav()):(t.style.display="none",n.style.display="none")}function renderSubjectNav(){const e=subjects.map(((e,t)=>`\n                    <button \n                        class="subject-nav-btn" \n                        onclick="scrollToSubject(${t})" \n                        title="${e.name}" \n                        data-subject-idx="${t}"\n                        data-tooltip="${e.name}">\n                        <span class="nav-number">${t+1}</span>\n                    </button>\n                `)).join(""),t=document.getElementById("subject-nav"),n=document.getElementById("subject-nav-mobile");t.innerHTML=e,n.innerHTML=e,subjects.forEach(((e,t)=>{updateNavButtonStatus(t),updateSubjectTotal(t)})),setupNavObserver()}function isSubjectInternalComplete(e){const t=subjects[e];let n=!0;return t.components.forEach(((t,a)=>{const o=document.getElementById(`marks-${e}-${a}`);if(o)if("checkbox"===o.type);else{0;""===o.value.trim()?n=!1:0}})),n}function renderHelpNav(){const e=[{id:"help-sgpa",icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',label:"SGPA Calculation"},{id:"help-grades",icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>',label:"Grade Scale"},{id:"help-scenarios",icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>',label:"Scenarios"}],t=e.map(((e,t)=>`\n                <button \n                    class="subject-nav-btn help-nav-btn" \n                    onclick="scrollToHelpSection('${e.id}')" \n                    data-tooltip="${e.label}">\n                    ${e.icon}\n                </button>\n            `)).join(""),n=e.map(((e,t)=>`\n                <button \n                    class="subject-nav-btn help-nav-btn" \n                    onclick="scrollToHelpSection('${e.id}')">\n                    ${e.icon}\n                </button>\n            `)).join(""),a=document.getElementById("subject-nav"),o=document.getElementById("subject-nav-mobile");a.innerHTML=t,o.innerHTML=n,setupHelpNavObserver()}function scrollToHelpSection(e){const t=document.getElementById(e);t&&(t.scrollIntoView({behavior:"smooth",block:"start"}),setTimeout((()=>{updateHelpNavActive(e)}),100))}function updateHelpNavActive(e){document.querySelectorAll(".help-nav-btn").forEach((t=>{t.getAttribute("onclick").match(/'([^']+)'/)[1]===e?t.classList.add("active"):t.classList.remove("active")}))}function setupHelpNavObserver(){document.querySelectorAll(".help-nav-btn");const e=document.querySelectorAll(".help-section");if(0===e.length)return;const t=new IntersectionObserver((e=>{let t=null,n=0;e.forEach((e=>{e.intersectionRatio>n&&(n=e.intersectionRatio,t=e.target)})),t&&n>.3&&updateHelpNavActive(t.id)}),{threshold:[0,.25,.5,.75,1],rootMargin:"-20% 0px -50% 0px"});e.forEach((e=>t.observe(e)))}async function toggleTheme(e){const t=document.documentElement,n="dark"===t.getAttribute("data-theme")?"light":"dark",a=(e?e.currentTarget:document.querySelector(".action-icon-btn:last-child")).getBoundingClientRect(),o=a.left+a.width/2,s=a.top+a.height/2;if(!document.startViewTransition)return t.setAttribute("data-theme",n),localStorage.setItem("theme",n),void updateThemeIcons(n);const r=document.startViewTransition((()=>{t.setAttribute("data-theme",n),localStorage.setItem("theme",n),updateThemeIcons(n)}));await r.ready;const i=Math.max(o,window.innerWidth-o),c=Math.max(s,window.innerHeight-s),d=Math.sqrt(i**2+c**2);document.documentElement.animate({clipPath:[`circle(0px at ${o}px ${s}px)`,`circle(${d}px at ${o}px ${s}px)`]},{duration:800,easing:"cubic-bezier(0.4, 0, 0.2, 1)",pseudoElement:"::view-transition-new(root)"})}function updateThemeIcons(e){const t=document.getElementById("theme-icon-light"),n=document.getElementById("theme-icon-dark");"dark"===e?(t.style.display="block",n.style.display="none"):(t.style.display="none",n.style.display="block")}function loadTheme(){const e=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",e);const t=document.getElementById("theme-icon-light"),n=document.getElementById("theme-icon-dark");"dark"===e?(t.style.display="block",n.style.display="none"):(t.style.display="none",n.style.display="block")}function validateInput(e){const t=parseFloat(e.getAttribute("data-max"));let n=parseFloat(e.value);!isNaN(n)&&n>t?(e.value=t.toFixed(1),e.classList.add("error"),setTimeout((()=>e.classList.remove("error")),500)):!isNaN(n)&&n<0&&(e.value=0)}function handleInputKeydown(e,t,n,a,o){const s=e.target,r=parseFloat(s.value)||0,i=a<=10?.5:1;if("ArrowUp"===e.key){e.preventDefault();const n=Math.min(r+i,a);s.value=n,validateInput(s),updateSubjectTotal(t)}if("ArrowDown"===e.key){e.preventDefault();const n=Math.max(r-i,0);s.value=n,validateInput(s),updateSubjectTotal(t)}if("Enter"===e.key){e.preventDefault();const t=Array.from(document.querySelectorAll('input[type="number"]')),n=t.indexOf(s);n<t.length-1&&(t[n+1].focus(),t[n+1].select())}}function scrollToSubject(e){const t=document.getElementById(`subject-${e}`);if(t){const n=-100,a=t.getBoundingClientRect().top+window.pageYOffset+n;window.scrollTo({top:a,behavior:"smooth"}),document.querySelectorAll(".subject-nav-btn").forEach((e=>{e.classList.remove("active")}));const o=document.querySelector(`.subject-nav-btn[data-subject-idx="${e}"]`);o&&o.classList.add("active")}}function setupNavObserver(){const e=new IntersectionObserver((e=>{e.forEach((e=>{if(e.isIntersecting&&e.intersectionRatio>.1){const t=e.target.getAttribute("data-subject-idx");document.querySelectorAll(".subject-nav-btn").forEach((e=>{e.classList.remove("active")}));const n=document.querySelector(`.subject-nav-btn[data-subject-idx="${t}"]`);n&&n.classList.add("active")}}))}),{root:null,rootMargin:"-20% 0px -60% 0px",threshold:[0,.1,.5,1]});document.querySelectorAll(".subject-card").forEach((t=>{e.observe(t)}))}function updateGradeDisplays(){subjects.forEach(((e,t)=>{const n=document.getElementById(`grade-${t}`);if(n&&"-"!==n.textContent){const e=n.textContent,t=e.match(/^(\w+)(\s*\(\d+(\.\d+)?\s*GP\))?$/);if(t){const a=t[1];let o=0;if(e.includes("GP")){const t=e.match(/\((\d+(?:\.\d+)?)\s*GP\)/);t&&(o=parseFloat(t[1]))}else{o=getGrade("A+"===a?95:"A"===a?85:"B+"===a?78:"B"===a?72:"C+"===a?65:"C"===a?58:"D+"===a?52:"D"===a?45:"F"===a?35:0).point}window.innerWidth<=768?n.textContent=a:n.textContent=`${a} (${o} GP)`}}}))}document.querySelectorAll('[role="tab"]').forEach((e=>{e.addEventListener("click",(()=>activateTab(e))),e.addEventListener("keydown",(t=>{const n=Array.from(e.parentElement.parentElement.querySelectorAll('[role="tab"]'));let a=n.indexOf(e);"ArrowRight"===t.key&&(a=(a+1)%n.length),"ArrowLeft"===t.key&&(a=(a-1+n.length)%n.length),"Home"===t.key&&(a=0),"End"===t.key&&(a=n.length-1),["ArrowRight","ArrowLeft","Home","End"].includes(t.key)&&(t.preventDefault(),n[a].focus(),activateTab(n[a]))}))})),renderSubjects(),loadTheme(),window.addEventListener("resize",updateGradeDisplays),window.addEventListener("load",(()=>{setTimeout((()=>{const e=document.getElementById("page-loader");e.classList.add("hidden"),setTimeout((()=>{e.style.display="none"}),500)}),500)}))</script>
-<footer style="background:var(--bg-primary);color:#fff;padding:20px 0;margin-top:40px">
-<div style="max-width:1200px;margin:0 auto;padding:0 20px">
-<div style="border-top:1px solid #333;padding-top:15px">
-<div style=display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px>
-<div style=font-size:14px;color:#ccc>
-© 2025. All Rights Reserved. No data Stored anywhere.<br>
-Built by <strong>Md Dilshan</strong>, Beautified by <strong>DevRanbir </strong> with ❤️ for you
-</div>
-<div style=display:flex;align-items:center>
-<a href=https://github.com/Imdilshan/Internal-Marks-Calculator style=color:#fff;text-decoration:none aria-label=GitHub>
-<svg width=24 height=24 viewBox="0 0 24 24" fill=currentColor>
-<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-</svg>
-</a>
-</div>
-</div>
-</div>
-</div>
-<style>[data-theme=dark] footer{background:#000!important}[data-theme=light] footer div[style*=border-top]{border-top-color:#e9ecef!important}[data-theme=light] footer div[style*="color: #ccc"]{color:#fff!important}[data-theme=light] footer a{color:#fff!important}@media (max-width:768px){footer div[style*="justify-content: space-between"]{flex-direction:column!important;align-items:center!important;text-align:center!important;gap:15px!important}footer div[style*="gap: 15px"]{margin-top:0!important}}</style>
-</footer>
-</body>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="icon" type="image/png" href="favicon.png" />
+      <title>Internal Marks Calculator</title>
+        <meta property="og:title" content="Internal Marks Calculator" />
+        <meta property="og:description" content="Calculate Internal marks and Grade easily." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://imdilshan.github.io/Internal-Marks-Calculator/" />
+        <meta property="og:image" content="https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Internal Marks Calculator" />
+        <meta name="twitter:description" content="Calculate Internal marks and Grade easily." />
+        <meta name="twitter:image" content="https://imdilshan.github.io/Internal-Marks-Calculator/preview1.jpg" />
+      
+      <style>
+         :root{
+         --bg:#0f1112; --panel:#0b0d0e; --muted:#9fb0b6; --accent:#2fb0ff; --ok:#2fb26f; --danger:#e05a5a;
+         --tab-inactive:#071015;
+         --hybrid-color: #e05a5a; 
+         --theory-color: #2fb0ff;
+         --practical-color: #2fb26f; 
+         --tab-active-text-dark: #042026;
+         --tab-active-text-light: #ffffff;
+         }
+         html,body{height:100%;margin:0;background:linear-gradient(180deg,#0b0b0c 0%, #121314 100%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:#e6eef2}
+         .container{max-width:1050px;margin:28px auto;padding:20px;}
+         header{text-align:center;margin-bottom:14px}
+         h1{font-size:26px;margin:0;color:var(--accent);font-weight:800}
+         .credit-wrap { margin-top: 8px; display:flex; justify-content:center; }
+         .credit {
+         display:inline-flex;
+         align-items:center;
+         gap:10px;
+         padding:8px 14px;
+         border-radius:14px;
+         background: rgba(255,255,255,0.03);
+         border: 1px solid rgba(255,255,255,0.04);
+         backdrop-filter: blur(6px);
+         text-decoration:none;
+         color: #bfe9ff;
+         font-weight:600;
+         font-size:14px;
+         transition: transform .14s ease, box-shadow .18s ease, background .12s ease;
+         box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+         }
+         .credit:hover { transform: translateY(-3px); background: rgba(47,176,255,0.08); box-shadow: 0 8px 30px rgba(47,176,255,0.06); color: var(--accent); }
+         .credit .gh-icon { width:18px; height:18px; display:inline-block; vertical-align:middle; fill: currentColor; opacity:0.95; }
+         .credit .name { color: #e6f9ff; font-weight:700; letter-spacing: .2px; }
+         .credit .meta { font-size:13px; opacity:0.85; color:#cfe7ef; }
+         @media (max-width:420px) {
+         .credit { padding:7px 10px; gap:8px; font-size:13px; border-radius:10px; }
+         }
+         .tabs{display:flex;gap:10px;margin:18px 0}
+         .tab{flex:1;padding:10px 14px;border-radius:8px;background:var(--tab-inactive);text-align:center;cursor:pointer;font-weight:700;color:#cfe7ef;user-select:none}
+         .tab.active{box-shadow:inset 0 -3px rgba(0,0,0,0.2)}
+         .tab.hybrid.active{background:var(--hybrid-color); color:var(--tab-active-text-light)}
+         .tab.theory.active{background:var(--theory-color); color:var(--tab-active-text-dark)}
+         .tab.practical.active{background:var(--practical-color); color:var(--tab-active-text-dark)}
+         .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));border-radius:12px;padding:18px;box-shadow: 0 8px 30px rgba(0,0,0,0.6);} 
+         .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+         .section{padding:12px;border-radius:10px;background:#071014;border:1px solid rgba(255,255,255,0.02)}
+         label{display:block;font-size:13px;color:#bcd1d9;margin-bottom:6px}
+         input[type=number]{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #233235;background:#060808;color:#e6eef2;font-weight:700}
+         .controls{display:flex;gap:10px;margin-top:16px}
+         button{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:800}
+         .btn-reset{background:var(--danger);color:white}
+         .btn-calc{background:var(--ok);color:#03100a;margin-left:auto}
+         .result{margin-top:16px;background:#061112;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+         .line{display:flex;justify-content:space-between;padding:6px 0;color:#d7eef5}
+         .bar{height:12px;background:#0a1a1c;border-radius:8px;overflow:hidden;margin-top:8px}
+         .bar > i{display:block;height:100%;background:linear-gradient(90deg,#1fb0ff,#2fd8a6)}
+         .small{font-size:13px;color:var(--muted)}
+         .break{margin-top:10px;border-top:1px dashed rgba(255,255,255,0.03);padding-top:10px}
+         .invalid { border:1px solid var(--danger) !important; }
+         .error-msg{color:var(--danger);font-size:12px;margin-top:6px;display:none}
+         .error-msg.show{display:block}
+         @media (max-width:1000px){ .grid{grid-template-columns:1fr} .tabs{flex-direction:column} .controls{flex-direction:row-reverse} }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <header>
+            <h1>Internal Marks Calculator</h1>
+            <div class="credit-wrap" aria-hidden="false">
+               <a class="credit" href="https://github.com/Imdilshan" target="_blank" rel="noopener noreferrer" aria-label="Open my GitHub profile in a new tab">
+                  <span class="name">by</span>
+                  <svg class="gh-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                     <path d="M12 .297a12 12 0 0 0-3.797 23.396c.6.11.82-.26.82-.577v-2.04c-3.338.726-4.033-1.61-4.033-1.61-.546-1.387-1.333-1.758-1.333-1.758-1.088-.744.083-.729.083-.729 1.205.086 1.84 1.234 1.84 1.234 1.07 1.834 2.809 1.305 3.494.998.108-.776.42-1.305.763-1.605-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.381 1.235-3.221-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.52 11.52 0 0 1 6.003 0c2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.243 2.873.12 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.804 5.624-5.476 5.92.43.37.815 1.1.815 2.22v3.293c0 .32.217.694.825.576A12 12 0 0 0 12 .297"></path>
+                  </svg>
+                  <span class="name">Md Dilshan</span>
+               </a>
+            </div>
+         </header>
+         <div class="card">
+            <div class="tabs" role="tablist">
+               <div id="tab-hybrid" class="tab hybrid active" role="tab">Hybrid Subject</div>
+               <div id="tab-theory" class="tab theory" role="tab">Theory Subject</div>
+               <div id="tab-practical" class="tab practical" role="tab">Practical Subject</div>
+            </div>
+            <div id="panel-hybrid">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Theory Component (out of 50)</h3>
+                     <label>Assignment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_assignment" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_assignment" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">MST-1 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="hy_mst1" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-hy_mst1" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">MST-2 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="hy_mst2" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-hy_mst2" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">Surprise Test (out of 12)</label>
+                     <input type="number" inputmode="decimal" id="hy_surprise" min="0" max="12" step="0.01" placeholder="0 / 12">
+                     <div id="err-hy_surprise" class="error-msg">Value must be between 0 and 12</div>
+                     <label style="margin-top:10px">Quiz (out of 4)</label>
+                     <input type="number" inputmode="decimal" id="hy_quiz" min="0" max="4" step="0.01" placeholder="0 / 4">
+                     <div id="err-hy_quiz" class="error-msg">Value must be between 0 and 4</div>
+                     <label style="margin-top:10px">Case Study / PBL (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_pbl" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_pbl" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Attendance (out of 2)</label>
+                     <input type="number" inputmode="decimal" id="hy_attendance" min="0" max="2" step="0.01" placeholder="0 / 2">
+                     <div id="err-hy_attendance" class="error-msg">Value must be between 0 and 2</div>
+                     <label style="margin-top:10px">End Sem Written (out of 60)</label>
+                     <input type="number" inputmode="decimal" id="hy_endwritten" min="0" max="60" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-hy_endwritten" class="error-msg">Value must be between 0 and 60</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Practical Component (out of 100)</h3>
+                     <label>Experiment 1 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws1" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws1" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 2 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws2" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws2" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 3 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws3" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws3" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 4 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="hy_ws4" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-hy_ws4" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Class Performance (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_classperf" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_classperf" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Course Project (out of 5)</label>
+                     <input type="number" inputmode="decimal" id="hy_miniproject" min="0" max="5" step="0.01" placeholder="0 / 5">
+                     <div id="err-hy_miniproject" class="error-msg">Value must be between 0 and 5</div>
+                     <label style="margin-top:10px">Industry Aligned Assessment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="hy_industry" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-hy_industry" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">End Sem Practical (out of 40)</label>
+                     <input type="number" inputmode="decimal" id="hy_endpractical" min="0" max="40" step="0.01" placeholder="0 / 40">
+                     <div id="err-hy_endpractical" class="error-msg">Value must be between 0 and 40</div>
+                  </div>
+               </div>
+               <div class="controls">
+                  <button id="reset-hybrid" class="btn-reset">Reset</button>
+                  <button id="calc-hybrid" class="btn-calc">Calculate Hybrid</button>
+               </div>
+               <div id="result-hybrid" class="result" style="display:none">
+                  <h3 style="margin:0 0 8px;color:#bfe9ff">Hybrid Results</h3>
+                  <div class="line">
+                     <div class="small">Theory</div>
+                     <div id="hy_theory_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="break"></div>
+                  <div class="line">
+                     <div class="small">Practical</div>
+                     <div id="hy_practical_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="break"></div>
+                  <div class="line">
+                     <div class="small">Final</div>
+                     <div id="hy_combined_obt" style="font-family:monospace"></div>
+                  </div>
+                  <div class="line">
+                     <div class="small">Final %</div>
+                     <div id="hy_combined_pct" style="font-weight:800"></div>
+                  </div>
+                  <div class="bar"><i id="hy_bar" style="width:0%"></i></div>
+                  <div class="break"></div>
+               </div>
+            </div>
+            <div id="panel-theory" style="display:none;margin-top:14px">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Theory Subject</h3>
+                     <label>Assignment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="t_assignment" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-t_assignment" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">MST 1 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="t_mst1" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-t_mst1" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">MST 2 (out of 20)</label>
+                     <input type="number" inputmode="decimal" id="t_mst2" min="0" max="20" step="0.01" placeholder="0 / 20">
+                     <div id="err-t_mst2" class="error-msg">Value must be between 0 and 20</div>
+                     <label style="margin-top:10px">Surprise Test (out of 12)</label>
+                     <input type="number" inputmode="decimal" id="t_surprise" min="0" max="12" step="0.01" placeholder="0 / 12">
+                     <div id="err-t_surprise" class="error-msg">Value must be between 0 and 12</div>
+                     <label style="margin-top:10px">Quiz (out of 4)</label>
+                     <input type="number" inputmode="decimal" id="t_quiz" min="0" max="4" step="0.01" placeholder="0 / 4">
+                     <div id="err-t_quiz" class="error-msg">Value must be between 0 and 4</div>
+                     <label style="margin-top:10px">Attendance (out of 2)</label>
+                     <input type="number" inputmode="decimal" id="t_attendance" min="0" max="2" step="0.01" placeholder="0 / 2">
+                     <div id="err-t_attendance" class="error-msg">Value must be between 0 and 2</div>
+                     <label style="margin-top:10px">End Sem Written (out of 60)</label>
+                     <input type="number" inputmode="decimal" id="t_endwritten" min="0" max="60" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-t_endwritten" class="error-msg">Value must be between 0 and 60</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Output</h3>
+                     <div id="result-theory" class="result" style="display:none">
+                        <div class="line">
+                           <div class="small">Obtained</div>
+                           <div id="t_obt" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Total Max</div>
+                           <div id="t_max" style="font-family:monospace">40</div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Percentage</div>
+                           <div id="t_pct" style="font-weight:800"></div>
+                        </div>
+                        <div class="bar"><i id="t_bar" style="width:0%"></i></div>
+                        <div class="break"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="controls" style="margin-top:12px">
+                  <button id="reset-theory" class="btn-reset">Reset</button>
+                  <button id="calc-theory" class="btn-calc">Calculate Theory</button>
+               </div>
+            </div>
+            <div id="panel-practical" style="display:none;margin-top:14px">
+               <div class="grid">
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Practical Subject</h3>
+                     <label>Experiment 1 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws1" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws1" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 2 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws2" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws2" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 3 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws3" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws3" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Experiment 4 (out of 30)</label>
+                     <input type="number" inputmode="decimal" id="pr_ws4" min="0" max="30" step="0.01" placeholder="0 / 30">
+                     <div id="err-pr_ws4" class="error-msg">Value must be between 0 and 30</div>
+                     <label style="margin-top:10px">Class Performance (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="pr_classperf" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-pr_classperf" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">Course Project (out of 5)</label>
+                     <input type="number" inputmode="decimal" id="pr_miniproject" min="0" max="5" step="0.01" placeholder="0 / 5">
+                     <div id="err-pr_miniproject" class="error-msg">Value must be between 0 and 5</div>
+                     <label style="margin-top:10px">Industry Aligned Assessment (out of 10)</label>
+                     <input type="number" inputmode="decimal" id="pr_industry" min="0" max="10" step="0.01" placeholder="0 / 10">
+                     <div id="err-pr_industry" class="error-msg">Value must be between 0 and 10</div>
+                     <label style="margin-top:10px">End Sem Practical (out of 40)</label>
+                     <input type="number" inputmode="decimal" id="pr_endpractical" min="0" max="40" step="0.01" placeholder="leave empty if not given">
+                     <div id="err-pr_endpractical" class="error-msg">Value must be between 0 and 40</div>
+                  </div>
+                  <div class="section">
+                     <h3 style="margin:0 0 8px;color:#cfe7ef">Output</h3>
+                     <div id="result-practical" class="result" style="display:none">
+                        <div class="line">
+                           <div class="small">Practical Obtained</div>
+                           <div id="pr_obt" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Practical Max</div>
+                           <div id="pr_max" style="font-family:monospace"></div>
+                        </div>
+                        <div class="line">
+                           <div class="small">Practical %</div>
+                           <div id="pr_pct" style="font-weight:800"></div>
+                        </div>
+                        <div class="bar"><i id="pr_bar" style="width:0%"></i></div>
+                        <div class="break"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="controls" style="margin-top:12px">
+                  <button id="reset-practical" class="btn-reset">Reset</button>
+                  <button id="calc-practical" class="btn-calc">Calculate Practical</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         (function(){
+         
+           const tabHybrid = document.getElementById('tab-hybrid');
+           const tabTheory = document.getElementById('tab-theory');
+           const tabPractical = document.getElementById('tab-practical');
+           const panelHybrid = document.getElementById('panel-hybrid');
+           const panelTheory = document.getElementById('panel-theory');
+           const panelPractical = document.getElementById('panel-practical');
+           function showTab(tab){
+             tabHybrid.classList.remove('active');
+             tabTheory.classList.remove('active');
+             tabPractical.classList.remove('active');
+             panelHybrid.style.display = 'none';
+             panelTheory.style.display = 'none';
+             panelPractical.style.display = 'none';
+             tab.classList.add('active');
+             if(tab === tabHybrid) panelHybrid.style.display = '';
+             if(tab === tabTheory) panelTheory.style.display = '';
+             if(tab === tabPractical) panelPractical.style.display = '';
+           }
+           if(tabHybrid && tabTheory && tabPractical){
+             tabHybrid.addEventListener('click', ()=> showTab(tabHybrid));
+             tabTheory.addEventListener('click', ()=> showTab(tabTheory));
+             tabPractical.addEventListener('click', ()=> showTab(tabPractical));
+           }
+         
+           function getRawValue(id){
+             const el = document.getElementById(id);
+             if(!el) return {provided:false, value:0};
+             if(el.value === '' || el.value === null) return {provided:false, value:0};
+             const n = Number(el.value);
+             return {provided: !Number.isNaN(n), value: n};
+           }
+           function getNum(id, max){
+             const r = getRawValue(id);
+             if(!r.provided) return 0;
+             let n = r.value;
+             if(Number.isNaN(n)) return 0;
+             if(typeof max === 'number'){
+               if(n < 0) n = 0;
+               if(n > max) n = max;
+             }
+             return n;
+           }
+           function setText(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; }
+           function show(id){ const el = document.getElementById(id); if(el) el.style.display = ''; }
+           function hide(id){ const el = document.getElementById(id); if(el) el.style.display = 'none'; }
+         
+           const numberInputs = Array.from(document.querySelectorAll('input[type=number]'));
+           numberInputs.forEach(inp => {
+             inp.addEventListener('input', (e)=>{
+               const oldPos = inp.selectionStart;
+               const oldVal = inp.value;
+               let cleaned = oldVal.replace(/[eE+\-]/g, '');
+               const parts = cleaned.split('.');
+               if(parts.length > 2) cleaned = parts[0] + '.' + parts.slice(1).join('');
+               if(cleaned !== oldVal){
+                 const diff = oldVal.length - cleaned.length;
+                 inp.value = cleaned;
+                 const newPos = Math.max(oldPos - diff, 0);
+                 try { inp.setSelectionRange(newPos, newPos); } catch(e){}
+               }
+               validateField(inp.id);
+             });
+             inp.addEventListener('keydown', (ev)=>{
+               const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+               if(allowed.includes(ev.key)) return;
+               if((ev.key >= '0' && ev.key <= '9') || ev.key === '.') return;
+               ev.preventDefault();
+             });
+           });
+         
+           function validateField(id){
+             const el = document.getElementById(id);
+             const err = document.getElementById('err-' + id);
+             if(!el || !err) return true;
+             const min = el.hasAttribute('min') ? Number(el.getAttribute('min')) : null;
+             const max = el.hasAttribute('max') ? Number(el.getAttribute('max')) : null;
+             if(el.value === ''){
+               el.classList.remove('invalid');
+               err.classList.remove('show');
+               return true;
+             }
+             const n = Number(el.value);
+             if(Number.isNaN(n)){ el.classList.add('invalid'); err.textContent = 'Enter a valid number'; err.classList.add('show'); return false; }
+             if(min !== null && n < min){ el.classList.add('invalid'); err.textContent = `Value must be ≥ ${min}`; err.classList.add('show'); return false; }
+             if(max !== null && n > max){ el.classList.add('invalid'); err.textContent = `Value must be ≤ ${max}`; err.classList.add('show'); return false; }
+             el.classList.remove('invalid'); err.classList.remove('show'); return true;
+           }
+           function validateAll(){ return Array.from(numberInputs).map(i=> validateField(i.id)).every(x=>x); }
+         
+           function calcHybrid(){
+             try{
+               if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+               const assignment = getNum('hy_assignment', 10);
+               const mst1 = getNum('hy_mst1', 20);
+               const mst2 = getNum('hy_mst2', 20);
+               const surprise = getNum('hy_surprise', 12);
+               const quiz = getNum('hy_quiz', 4);
+               const pbl = getNum('hy_pbl', 10);
+               const attendance = getNum('hy_attendance', 2);
+               const rawEnd = document.getElementById('hy_endwritten');
+               let endWrittenProvided = false, endWrittenRaw = 0;
+               if(rawEnd && rawEnd.value !== ''){ endWrittenProvided = true; endWrittenRaw = Number(rawEnd.value); }
+         
+               const ws1 = getNum('hy_ws1',30), ws2 = getNum('hy_ws2',30), ws3 = getNum('hy_ws3',30), ws4 = getNum('hy_ws4',30);
+               const classPerfOrig = getNum('hy_classperf',10), miniproject = getNum('hy_miniproject',5), industry = getNum('hy_industry',10);
+               const endPracticalEl = document.getElementById('hy_endpractical');
+               let endPracticalProvided = false, endPractical = 0;
+               if(endPracticalEl && endPracticalEl.value !== ''){ endPracticalProvided = true; endPractical = Number(endPracticalEl.value); }
+         
+               const mstFinal = (mst1 + mst2) / 2;
+               const surpriseFinal = (surprise + quiz) / 2;
+               const theoryInternal = assignment + mstFinal + surpriseFinal + pbl + attendance;
+               const endWrittenScaled = endWrittenProvided ? (endWrittenRaw / 60) * 50 : 0;
+               const theoryTotal = endWrittenProvided ? (theoryInternal + endWrittenScaled) : theoryInternal;
+               const theoryMax = endWrittenProvided ? 100 : 50;
+               const theoryPct = theoryMax === 0 ? 0 : (theoryTotal / theoryMax) * 100;
+         
+               const wsSum = ws1 + ws2 + ws3 + ws4;
+               const classAssessment = wsSum / 3;
+               const classPerfNew = classPerfOrig / 2;
+               const practicalInternal = classAssessment + classPerfNew + miniproject + industry; 
+               const practicalTotal = endPracticalProvided ? (practicalInternal + endPractical) : practicalInternal;
+               const practicalMax = endPracticalProvided ? 100 : 60;
+               const practicalPct = practicalMax === 0 ? 0 : (practicalTotal / practicalMax) * 100;
+         
+               const totalObtained = theoryTotal + practicalTotal;
+               const totalMax = theoryMax + practicalMax;
+               const displayObtained = totalObtained / 2;
+               const displayMax = totalMax / 2;
+               const displayPct = displayMax === 0 ? 0 : (displayObtained / displayMax) * 100;
+         
+               setText('hy_theory_pct', `${theoryTotal.toFixed(2)} / ${theoryMax} (${theoryPct.toFixed(2)}%)`);
+               setText('hy_practical_pct', `${practicalTotal.toFixed(2)} / ${practicalMax} (${practicalPct.toFixed(2)}%)`);
+               setText('hy_combined_obt', `${displayObtained.toFixed(2)} / ${displayMax.toFixed(2)}`);
+               setText('hy_combined_pct', displayPct.toFixed(2) + '%');
+         
+               const bar = document.getElementById('hy_bar'); if(bar) bar.style.width = Math.min(100, displayPct) + '%';
+               show('result-hybrid');
+               const resEl = document.getElementById('result-hybrid'); if(resEl) resEl.scrollIntoView({behavior:'smooth', block:'center'});
+             }catch(err){ console.error(err); alert('Calculation failed — open console for details'); }
+           }
+           document.getElementById('calc-hybrid').addEventListener('click', calcHybrid);
+           document.getElementById('reset-hybrid').addEventListener('click', ()=>{
+             ['hy_assignment','hy_mst1','hy_mst2','hy_surprise','hy_quiz','hy_pbl','hy_attendance','hy_endwritten','hy_ws1','hy_ws2','hy_ws3','hy_ws4','hy_classperf','hy_miniproject','hy_industry','hy_endpractical'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-hybrid');
+           });
+         
+           function calcTheory(){
+             if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+             const a = getNum('t_assignment',10), m1 = getNum('t_mst1',20), m2 = getNum('t_mst2',20);
+             const surprise = getNum('t_surprise',12), quiz = getNum('t_quiz',4), at = getNum('t_attendance',2);
+             const tEndEl = document.getElementById('t_endwritten');
+             let tEndProvided = false, tEndRaw = 0;
+             if(tEndEl && tEndEl.value !== ''){ tEndProvided = true; tEndRaw = Number(tEndEl.value); }
+             const mstFinal = (m1 + m2) / 2;
+             const surpriseFinal = surprise / 2;
+             const quizFinal = quiz / 2;
+             const internalObtained = a + mstFinal + surpriseFinal + quizFinal + at;
+             let obtained = internalObtained, totalMax = 40;
+             if(tEndProvided){ obtained = internalObtained + tEndRaw; totalMax = 100; }
+             const pct = totalMax === 0 ? 0 : (obtained / totalMax) * 100;
+             setText('t_obt', `${obtained.toFixed(2)} / ${totalMax}`);
+             setText('t_max', totalMax.toFixed(0));
+             setText('t_pct', pct.toFixed(2) + '%');
+             const tbar = document.getElementById('t_bar'); if(tbar) tbar.style.width = Math.min(100,pct) + '%';
+             show('result-theory');
+             const resT = document.getElementById('result-theory'); if(resT) resT.scrollIntoView({behavior:'smooth', block:'center'});
+           }
+           document.getElementById('calc-theory').addEventListener('click', calcTheory);
+           document.getElementById('reset-theory').addEventListener('click', ()=>{
+             ['t_assignment','t_mst1','t_mst2','t_surprise','t_quiz','t_attendance','t_endwritten'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-theory');
+           });
+         
+           function calcPractical(){
+             if(!validateAll()){ alert('Fix input errors (highlighted in red) before calculating'); return; }
+             const ws1 = getNum('pr_ws1',30), ws2 = getNum('pr_ws2',30), ws3 = getNum('pr_ws3',30), ws4 = getNum('pr_ws4',30);
+             const wsAvg = (ws1 + ws2 + ws3 + ws4) / 4;
+             const worksheetsScaled = (wsAvg * (40/30)); 
+             const classPerf = getNum('pr_classperf',10);
+             const mini = getNum('pr_miniproject',5);
+             const industry = getNum('pr_industry',10);
+         
+             const prInternal = worksheetsScaled + (classPerf / 2) + mini + industry; 
+             const endEl = document.getElementById('pr_endpractical');
+             let endProvided = false, endRaw = 0;
+             if(endEl && endEl.value !== ''){ endProvided = true; endRaw = Number(endEl.value); }
+             const prTotal = endProvided ? (prInternal + endRaw) : prInternal;
+             const prMax = endProvided ? 100 : 60;
+             const prPct = prMax === 0 ? 0 : (prTotal / prMax) * 100;
+         
+             setText('pr_obt', `${prTotal.toFixed(2)}`);
+             setText('pr_max', `${prMax}`);
+             setText('pr_pct', `${prPct.toFixed(2)}%`);
+             const prbar = document.getElementById('pr_bar'); if(prbar) prbar.style.width = Math.min(100, prPct) + '%';
+             show('result-practical');
+             const res = document.getElementById('result-practical'); if(res) res.scrollIntoView({behavior:'smooth', block:'center'});
+           }
+           document.getElementById('calc-practical').addEventListener('click', calcPractical);
+           document.getElementById('reset-practical').addEventListener('click', ()=>{
+             ['pr_ws1','pr_ws2','pr_ws3','pr_ws4','pr_classperf','pr_miniproject','pr_industry','pr_endpractical'].forEach(id=>{
+               const el = document.getElementById(id); if(el) el.value=''; const err = document.getElementById('err-'+id); if(err) err.classList.remove('show'); if(el) el.classList.remove('invalid');
+             });
+             hide('result-practical');
+           });
+         
+           hide('result-hybrid');
+           hide('result-theory');
+           hide('result-practical');
+         
+         })();
+      </script>
+   </body>
 </html>
